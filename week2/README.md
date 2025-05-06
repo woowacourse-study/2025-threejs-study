@@ -10,3 +10,6 @@
 
 - "다양한 Material을 적용한 여러 개의 도형 만들기"
   (Box, Sphere, Cone 등 3개 만들고, 각각 다른 Material 사용)
+
+https://github.com/user-attachments/assets/3baac481-6ba9-49b7-93f2-396b4f790235
+
