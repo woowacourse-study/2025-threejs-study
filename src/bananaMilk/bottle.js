@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js';
 export default function createBottle() {
   /* ---- 몸통 -----*/
   const points = [];

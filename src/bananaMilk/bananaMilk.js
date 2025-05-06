@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import createBottle from './bottle';
 import createCap from './cap';
 import createStraw from './straw';
+import { DecalGeometry } from 'three/examples/jsm/Addons.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -25,7 +26,8 @@ document.body.appendChild(renderer.domElement);
 const bottleGroup = new THREE.Group();
 
 // 2. 병과 뚜껑을 그룹에 추가
-bottleGroup.add(createBottle());
+const bananaMilk = createBottle(); // 병
+bottleGroup.add(bananaMilk);
 bottleGroup.add(createCap());
 bottleGroup.add(createStraw());
 
@@ -41,7 +43,7 @@ scene.add(light);
 light.castShadow = true;
 
 // ✨ (선택) 주변 광도 추가해주면 더 자연스러움
-const ambientLight = new THREE.AmbientLight('#00000', 3);
+const ambientLight = new THREE.AmbientLight('#ffffff', 3);
 scene.add(ambientLight);
 
 bottleGroup.rotation.x = 0.2; // 앞뒤로 기울기 (X축 회전)
@@ -50,33 +52,33 @@ bottleGroup.rotation.z = 0.2; // 좌우로 기울기 (Z축 회전)
 /*---로고--- */
 const textureLoader = new THREE.TextureLoader();
 const logoTexture = textureLoader.load('/bananaMilk-logo.png');
-const logoMaterial = new THREE.MeshBasicMaterial({
+
+const decalMaterial = new THREE.MeshBasicMaterial({
   map: logoTexture,
   transparent: true,
-  side: THREE.DoubleSide,
+  depthTest: true,
+  depthWrite: false,
+  polygonOffset: true,
+  polygonOffsetFactor: -4,
 });
 
-const logoPlane = new THREE.Mesh(
-  new THREE.PlaneGeometry(0.8, 0.55),
-  logoMaterial
+const decalGeometry = new DecalGeometry(
+  bananaMilk, // 대상 메쉬
+  new THREE.Vector3(0, 0.8, 0.6), // 위치 (병의 측면)
+  new THREE.Euler(0, 0, 0), // 회전
+  new THREE.Vector3(1, 0.4, 0.8) // 크기 (로고 크기)
 );
-logoPlane.position.set(0, 0, 0.7);
 
-scene.add(logoPlane);
+const decalMesh = new THREE.Mesh(decalGeometry, decalMaterial);
+decalMesh.rotation.x = 0.2; // 앞뒤로 기울기 (X축 회전)
+decalMesh.rotation.z = 0.2; // 좌우로 기울기 (Z축 회전)
 
-let angle = 0;
-const radius = 0.7; // 중심에서 떨어진 거리
+scene.add(decalMesh);
 
 function animate() {
   requestAnimationFrame(animate);
   bottleGroup.rotation.y += 0.01; // Y축 회전
-
-  angle += -0.009;
-  logoPlane.position.x = Math.cos(angle) * radius;
-  logoPlane.position.z = Math.sin(angle) * radius;
-  logoPlane.lookAt(0, bottleGroup.position.y, 0); // 로고가 병을 바라보도록 회전
-  logoPlane.rotateY(Math.PI);
-  logoPlane.rotateX(-0.3);
+  decalMesh.rotation.y += 0.01; // Y축 회전
 
   renderer.render(scene, camera);
 }
