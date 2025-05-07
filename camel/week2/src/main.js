@@ -7,11 +7,12 @@ import { createPavingStones } from "./objects/PavingStones";
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
-  75,
+  55,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
+
 camera.position.z = 3;
 
 const renderer = new THREE.WebGLRenderer();
@@ -19,7 +20,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5);
+light.position.set(5, 5, 5); // 빛의 위치를 (x, y, z)로 설정합니다.
 scene.add(light);
 
 const rock = createRockSphere();
@@ -44,13 +45,16 @@ async function init() {
 
 function animate() {
   requestAnimationFrame(animate);
+
   rock.rotation.x += 0.001;
   rock.rotation.y += 0.003;
+
   pavingStones.rotation.x += 0.001;
   pavingStones.rotation.y += 0.003;
 
   MeshBasicMaterialObject.rotation.x += 0.003;
   MeshBasicMaterialObject.rotation.y += 0.005;
+
   renderer.render(scene, camera);
 }
 

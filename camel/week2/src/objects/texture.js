@@ -22,7 +22,7 @@ export function createRockSphere() {
     roughnessMap: roughnessMap,
     aoMap: aoMap,
     displacementMap: displacementMap,
-    displacementScale: 0.03,
+    displacementScale: 0.01,
   });
 
   const sphere = new THREE.Mesh(geometry, material);
