@@ -1,0 +1,4 @@
+export const SYSTEM_CONSTANTS = {
+  BODY_DEPTH: 500,
+  MESH_SCALE: 0.01,
+};
