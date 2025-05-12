@@ -20,7 +20,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5); // 빛의 위치를 (x, y, z)로 설정합니다.
+light.position.set(5, 5, 5);
 scene.add(light);
 
 const rock = createRockSphere();

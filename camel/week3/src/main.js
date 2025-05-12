@@ -9,18 +9,14 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 camera.position.set(-0.5, 0.5, 2);
 camera.lookAt(0, 0, 0);
 
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5).normalize();
-scene.add(light);
-
-const ambientLight = new THREE.AmbientLight(0x404040);
+const ambientLight = new THREE.AmbientLight("#404040");
 scene.add(ambientLight);
 
 const rimLight = new THREE.DirectionalLight("#ffffff", 10);
@@ -32,7 +28,7 @@ rimLight.target.position.set(0, 0, 0);
 scene.add(rimLight);
 scene.add(rimLight.target);
 
-const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 1, 0xff0000);
+const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 1, "#ff0000");
 scene.add(rimLightHelper);
 
 const bottomLight = new THREE.DirectionalLight("#5183FF", 10);
@@ -52,7 +48,7 @@ keyLight.position.set(-1, 1, 1);
 keyLight.target.position.set(0, 0, 0);
 scene.add(keyLight);
 scene.add(keyLight.target);
-const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 1, 0x0000ff);
+const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 1, "#0000ff");
 scene.add(keyLightHelper);
 
 let model;
