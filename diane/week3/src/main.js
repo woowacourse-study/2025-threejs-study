@@ -5,6 +5,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { createTorus } from './Torus.js';
+import { OrbitControls } from 'three/examples/jsm/Addons.js';
 
 //씬,카메라, 렌더러 생성
 const scene = new THREE.Scene();
@@ -23,6 +24,12 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
+
+/*---OrbitControls---*/
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.1;
 
 const centerSphere = createCenterSphere();
 const centerPointSphere = createCenterPointSphere();
@@ -54,7 +61,7 @@ composer.addPass(new RenderPass(scene, camera));
 const bloomPass = new UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
   1.5, // strength (빛 퍼짐 강도)
-  1.4, // radius (퍼지는 범위)
+  1.0, // radius (퍼지는 범위)
   0.5 // threshold (얼마나 밝아야 퍼질지)
 );
 
@@ -68,10 +75,11 @@ function animate() {
   const scale = 1 + Math.sin(time) * 0.15; // 1 ~ 1.2 사이에서 변화
 
   centerPointSphere.scale.set(scale, scale, scale); // 중심 구체에 적용
+  controls.update(); // OrbitControls 업데이트
 
-  centerSphere.rotation.x += 0.01;
-  centerSphere.rotation.y += 0.01;
-  torusGroup.rotation.y += 0.007;
+  // centerSphere.rotation.x += 0.01;
+  // centerSphere.rotation.y += 0.01;
+  // torusGroup.rotation.y += 0.007;
 
   composer.render();
 }

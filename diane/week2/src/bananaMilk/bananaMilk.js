@@ -80,12 +80,14 @@ function animate() {
   bottleGroup.rotation.y += 0.01; // Y축 회전
   decalMesh.rotation.y += 0.01; // Y축 회전
 
-    // const t = Date.now() * 0.001; // 초 단위 시간
-    // camera.position.z = 2.7 + Math.sin(t * 10) * 0.5;
-    // const hue = (t * 0.4) % 1; // 0 ~ 1 사이로 순환
-    // ambientLight.color.setHSL(hue, 3, 0.5); // (색상, 채도, 명도)
+  controls.update();
+
+  // const t = Date.now() * 0.001; // 초 단위 시간
+  // camera.position.z = 2.7 + Math.sin(t * 10) * 0.5;
+  // const hue = (t * 0.4) % 1; // 0 ~ 1 사이로 순환
+  // ambientLight.color.setHSL(hue, 3, 0.5); // (색상, 채도, 명도)
 
   renderer.render(scene, camera);
 }
 animate();
-` `
+` `;
