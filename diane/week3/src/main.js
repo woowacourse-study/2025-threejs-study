@@ -77,9 +77,9 @@ function animate() {
   centerPointSphere.scale.set(scale, scale, scale); // 중심 구체에 적용
   controls.update(); // OrbitControls 업데이트
 
-  // centerSphere.rotation.x += 0.01;
-  // centerSphere.rotation.y += 0.01;
-  // torusGroup.rotation.y += 0.007;
+  centerSphere.rotation.x += 0.01;
+  centerSphere.rotation.y += 0.01;
+  torusGroup.rotation.y += 0.007;
 
   composer.render();
 }
