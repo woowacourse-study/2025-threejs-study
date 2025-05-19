@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { createBassBody } from "./models/bassBody.js";
-import { createBassNeck } from "./models/bassNeck.js";
+import { loadGLBModel } from "./loaders/loadGLBModel";
+import { Box3, Vector3 } from "three";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color("#1e1e1e");
@@ -28,18 +28,58 @@ controls.enableDamping = true;
 const ambient = new THREE.AmbientLight(0x404040, 1);
 scene.add(ambient);
 
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 10, 10);
-scene.add(light);
+const keyLight = new THREE.DirectionalLight(0xffffff, 2);
+const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 5);
+keyLight.position.set(50, 30, 50);
+scene.add(keyLight);
+scene.add(keyLightHelper);
 
-// Scene - bass body
-createBassBody().then((meshes) => {
-  meshes.forEach((mesh) => scene.add(mesh));
+const rimLight = new THREE.DirectionalLight(0xffffff, 2.5);
+const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 5);
+rimLight.position.set(0, 40, -100);
+scene.add(rimLight);
+scene.add(rimLightHelper);
+
+const bottomLight = new THREE.PointLight(0xff0000, 1.5, 50);
+bottomLight.position.set(0, -30, 0);
+scene.add(bottomLight);
+
+// scene
+const radians = THREE.MathUtils.degToRad(310);
+const radians2 = THREE.MathUtils.degToRad(-5);
+const radians3 = THREE.MathUtils.degToRad(-70);
+
+//상단 픽업
+loadGLBModel("/models/bass-pickup.glb", (model) => {
+  model.position.set(3, 2, 4);
+  model.scale.set(10, 10, 10);
+  model.rotation.set(radians2, 0, radians);
+  scene.add(model);
+  animate();
 });
 
-// Scene - bass neck
-createBassNeck().then((mesh) => {
-  scene.add(mesh);
+//하단 픽업
+loadGLBModel("/models/bass-pickup.glb", (model) => {
+  model.position.set(5, -5, 5);
+  model.scale.set(10, 10, 10);
+  model.rotation.set(radians2, 0, radians);
+  scene.add(model);
+  animate();
+});
+
+loadGLBModel("/models/bass-bridge.glb", (model) => {
+  model.position.set(7, -12, 6);
+  model.scale.set(7, 7, 7);
+  scene.add(model);
+  model.rotation.set(radians2, 0, radians3);
+  animate();
+});
+
+loadGLBModel("/models/bass-body.glb", (model) => {
+  model.position.set(0, 0, 5);
+  model.scale.set(40, 40, 40);
+  scene.add(model);
+  animate();
 });
 
 function animate() {

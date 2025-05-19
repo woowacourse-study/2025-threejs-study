@@ -65,7 +65,7 @@ scene.add(innerCube);
 // sphere
 const sphere = new THREE.Mesh(
   new THREE.SphereGeometry(1, 16, 32),
-  new THREE.MeshStandardMaterial({ metalness: 0.5, roughness: 0.5 })
+  new THREE.MeshStandardMaterial({ metalness: 0.3, roughness: 0.5 })
 );
 scene.add(sphere);
 
