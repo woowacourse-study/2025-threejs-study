@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { loadGLBModel } from "./loaders/loadGLBModel";
-import { Box3, Vector3 } from "three";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color("#1e1e1e");
@@ -48,6 +47,7 @@ scene.add(bottomLight);
 const radians = THREE.MathUtils.degToRad(310);
 const radians2 = THREE.MathUtils.degToRad(-5);
 const radians3 = THREE.MathUtils.degToRad(-70);
+const radians4 = THREE.MathUtils.degToRad(18);
 
 //상단 픽업
 loadGLBModel("/models/bass-pickup.glb", (model) => {
@@ -68,7 +68,7 @@ loadGLBModel("/models/bass-pickup.glb", (model) => {
 });
 
 loadGLBModel("/models/bass-bridge.glb", (model) => {
-  model.position.set(7, -12, 6);
+  model.position.set(6, -12, 6);
   model.scale.set(7, 7, 7);
   scene.add(model);
   model.rotation.set(radians2, 0, radians3);
@@ -78,6 +78,14 @@ loadGLBModel("/models/bass-bridge.glb", (model) => {
 loadGLBModel("/models/bass-body.glb", (model) => {
   model.position.set(0, 0, 5);
   model.scale.set(40, 40, 40);
+  scene.add(model);
+  animate();
+});
+
+loadGLBModel("/models/bass-neck.glb", (model) => {
+  model.position.set(-9, 25, 0);
+  model.scale.set(60, 60, 60);
+  model.rotation.set(radians4, 0, radians4);
   scene.add(model);
   animate();
 });
