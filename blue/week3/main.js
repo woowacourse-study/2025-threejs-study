@@ -24,24 +24,33 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
 // Light
-const ambient = new THREE.AmbientLight(0x404040, 1);
-scene.add(ambient);
+// const ambient = new THREE.AmbientLight(0x404040, 1);
+// scene.add(ambient);
 
+// Key Light – 메인 조명: 적당한 세기, 보통 크기
 const keyLight = new THREE.DirectionalLight(0xffffff, 2);
-const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 5);
+const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 3, 0xffffff);
 keyLight.position.set(50, 30, 50);
 scene.add(keyLight);
 scene.add(keyLightHelper);
 
-const rimLight = new THREE.DirectionalLight(0xffffff, 2.5);
-const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 5);
-rimLight.position.set(0, 40, -100);
+// Rim Light – 윤곽 강조 조명: 세기 줄이고, helper 작게
+const rimLight = new THREE.DirectionalLight(0x66ccff, 1.5);
+const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 3, 0x66ccff);
+rimLight.position.set(-30, 40, -100);
 scene.add(rimLight);
 scene.add(rimLightHelper);
 
-const bottomLight = new THREE.PointLight(0xff0000, 1.5, 50);
-bottomLight.position.set(0, -30, 0);
+// Bottom Light – 무대 아래 강조 조명: 적당한 세기, helper 작게
+const bottomLight = new THREE.DirectionalLight(0xff0000, 2);
+const bottomLightHelper = new THREE.DirectionalLightHelper(
+  bottomLight,
+  2.5,
+  0xff0000
+);
+bottomLight.position.set(10, -30, 0);
 scene.add(bottomLight);
+scene.add(bottomLightHelper);
 
 // scene
 const radians = THREE.MathUtils.degToRad(310);
