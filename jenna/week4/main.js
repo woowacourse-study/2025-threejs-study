@@ -54,40 +54,42 @@ function makeScreen() {
 
 const screensGroup = new THREE.Group();
 
-const ROWS = 8; // 위도를 몇 개로 쪼갤 것인가
-const COLS = 20; // 경도를 몇 개로 쪼갤 것인가
-const SPHERE_RADIUS = RADIUS; // 기존 screen 반지름 재사용
+// 구의 위도를 스크린 높이 만큼 나누기 (rows 수)
+const rows = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT);
+const unitLocation = Math.PI / rows; // 스크린을 위치할 간격(단위)
+const adjustLocation = unitLocation / 2; // 중간을 시작점으로
 
-// φ: 0~π 사이 위도 각 (0: 북극, π: 남극)
-for (let i = 0; i < ROWS; i += 1) {
-  const phi = (Math.PI * (i + 0.5)) / ROWS;
+for (let i = 0; i < rows; i++) {
+  const location = adjustLocation + i * unitLocation;
+  const circumference = 2 * Math.PI * RADIUS * Math.sin(location); // 2파이r sin세타 (잘라낸 원 둘레)
 
-  // θ: 0~2π 사이 경도 각
-  for (let j = 0; j < COLS; j += 1) {
-    const theta = (2 * Math.PI * j) / COLS;
+  const cols = Math.ceil(circumference / SCREEN_WIDTH);
+  if (cols < 1) continue; // 스크린 1개도 안들어가면 건너 뛰기
+
+  // 구의 경도를 나누기
+  const thetaStep = (2 * Math.PI) / cols;
+
+  for (let j = 0; j < cols; j++) {
+    const theta = j * thetaStep;
 
     const mesh = makeScreen();
 
-    // 구면 좌표 → 직교 좌표 변환
-    const x = SPHERE_RADIUS * Math.sin(phi) * Math.cos(theta);
-    const y = SPHERE_RADIUS * Math.cos(phi);
-    const z = SPHERE_RADIUS * Math.sin(phi) * Math.sin(theta);
+    // 구면 → 직교 변환
+    const x = RADIUS * Math.sin(location) * Math.cos(theta);
+    const y = RADIUS * Math.cos(location);
+    const z = RADIUS * Math.sin(location) * Math.sin(theta);
     mesh.position.set(x, y, z);
 
-    // 매시가 항상 (0,0,0)을 바라보게
     mesh.lookAt(0, 0, 0);
-
     screensGroup.add(mesh);
   }
 }
 
 scene.add(screensGroup);
 
-/*
 // 축 표시
-const axes = new THREE.AxesHelper(5);
+const axes = new THREE.AxesHelper(50);
 scene.add(axes);
-*/
 
 const ambientLight = new THREE.AmbientLight('#ffffff', 1.5);
 scene.add(ambientLight);
