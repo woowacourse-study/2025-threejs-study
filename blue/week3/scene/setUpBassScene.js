@@ -29,7 +29,7 @@ export const setupBassScene = (bassGroup, camera, basePositions) => {
 		mouse.y = -(clientY / window.innerHeight) * 2 + 1;
 
 		raycaster.setFromCamera(mouse, camera);
-		// intersects -> 어디를 클릭했을 때 반응할 것인가
+		// intersects -> 어디를 클릭했을 때 반응할 것인가 (true 속성은 )
 		const intersects = raycaster.intersectObject(bassGroup, true);
 
 		// intersects가 존재한다 (클릭됐다) -> 애니메이션 시작
