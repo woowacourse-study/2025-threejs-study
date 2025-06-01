@@ -64,8 +64,10 @@ function makePatch(texture, thetaStart, thetaLength, phiStart, phiLength) {
 
 const screensGroup = new THREE.Group();
 const rows = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT);
-const unitPhi = Math.PI / rows;
-for (let i = 0; i < rows; i++) {
+const fullBands = rows + 2;
+const unitPhi = Math.PI / fullBands;
+
+for (let i = 1; i < fullBands - 1; i++) {
   const phiStart = i * unitPhi;
   const phiLength = unitPhi;
 
