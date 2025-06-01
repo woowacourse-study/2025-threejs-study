@@ -14,8 +14,60 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-camera.position.set(-0.5, 0.5, 2);
+camera.position.set(-0.5, 0.5, 10);
 camera.lookAt(0, 0, 0);
+
+// // 1. 육면체 텍스처 이미지 경로 배열 (순서: px, nx, py, ny, pz, nz)
+// const skyboxImages = [
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+// ];
+
+// // 2. 각 면의 재질 생성
+// const materialArray = skyboxImages.map(
+//   (img) =>
+//     new THREE.MeshBasicMaterial({
+//       map: new THREE.TextureLoader().load(img),
+//       side: THREE.BackSide, // 내부에서 보이게
+//     })
+// );
+
+// // 3. 큐브(스카이박스) 생성
+// const skyboxGeo = new THREE.BoxGeometry(100, 100, 100);
+// const skybox = new THREE.Mesh(skyboxGeo, materialArray);
+// scene.add(skybox);
+
+// const loader = new THREE.CubeTextureLoader();
+// const texture = loader.load([
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+//   "/assets/background-space.jpg",
+// ]);
+// scene.background = texture;
+
+const textureLoader = new THREE.TextureLoader();
+const skyTexture = textureLoader.load("/assets/background-space.jpg");
+
+// 반드시 텍스처 객체에 직접 encoding 지정
+skyTexture.encoding = THREE.sRGBEncoding;
+
+const geometry = new THREE.SphereGeometry(500, 60, 40);
+const material = new THREE.MeshBasicMaterial({
+  map: skyTexture,
+  side: THREE.BackSide,
+});
+const skyDome = new THREE.Mesh(geometry, material);
+scene.add(skyDome);
+
+// 렌더러에도 sRGBEncoding 지정
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.enableDamping = true; // true로 설정하면 부드러운 카메라 이동
@@ -76,7 +128,7 @@ loadModel("/assets/dr-martin.glb")
   .then((loadedModel) => {
     drMartin = loadedModel;
     drMartin.scale.set(1, 1, 1);
-    drMartin.position.set(-1, 0, -1.5);
+    drMartin.position.set(-2, 2, 1);
     drMartin.rotation.set(-0.5, -2.5, 0);
 
     scene.add(drMartin);

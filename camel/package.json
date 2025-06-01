@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@dev-dino22/modal-components": "^0.2.0",
     "three": "^0.176.0"
   },
   "scripts": {
