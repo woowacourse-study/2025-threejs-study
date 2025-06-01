@@ -3,6 +3,18 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+const baseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
+const SCREEN_IMAGE = [
+  '/v1740585635/woowacourse/web-wiki/sydney5.jpg',
+  '/v1740585635/woowacourse/web-wiki/sydney.jpg',
+  '/v1740585631/woowacourse/web-wiki/sydney7.jpg',
+  '/v1740589241/woowacourse/web-wiki/sydney10.jpg',
+];
+
+const SCREEN_WIDTH = 5;
+const SCREEN_HEIGHT = 3;
+const RADIUS = 5;
+
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#00023a');
 
@@ -12,112 +24,86 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.z = 20;
+camera.position.z = RADIUS * 3;
 
-//렌더러
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const SCREEN_WIDTH = 3;
-const SCREEN_HEIGHT = 2;
-const RADIUS = 5;
-const thetaLength = SCREEN_WIDTH / RADIUS;
-
-// 카메라 시점 조절
 const controls = new OrbitControls(camera, renderer.domElement);
+scene.add(new THREE.AxesHelper(2 * RADIUS));
+scene.add(new THREE.AmbientLight('#ffffff', 1.5));
+const dirLight = new THREE.DirectionalLight('#ffffff', 2);
+dirLight.position.set(5, 8, 5);
+scene.add(dirLight);
 
-// 화면
-const screenGeometry = new THREE.CylinderGeometry(
-  RADIUS,
-  RADIUS,
-  SCREEN_HEIGHT,
-  64,
-  1,
-  true,
-  -thetaLength / 2,
-  thetaLength
-);
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
 
-screenGeometry.rotateY(Math.PI);
+const loader = new THREE.TextureLoader();
+const textures = SCREEN_IMAGE.map((u) => loader.load(baseUrl + u));
 
-const screenMaterial = new THREE.MeshStandardMaterial({
-  color: '#ffffff',
-  emissive: '#222222',
-  side: THREE.DoubleSide,
-});
-
-function makeScreen() {
-  const materialClone = screenMaterial.clone();
-  return new THREE.Mesh(screenGeometry, materialClone);
+function makePatch(texture, thetaStart, thetaLength, phiStart, phiLength) {
+  const geo = new THREE.SphereGeometry(
+    RADIUS,
+    1,
+    1,
+    thetaStart,
+    thetaLength,
+    phiStart,
+    phiLength
+  );
+  const mat = new THREE.MeshStandardMaterial({
+    map: texture,
+    side: THREE.DoubleSide,
+    emissive: '#111111',
+    roughness: 0.8,
+  });
+  return new THREE.Mesh(geo, mat);
 }
 
 const screensGroup = new THREE.Group();
-
-// 구의 위도를 스크린 높이 만큼 나누기 (rows 수)
 const rows = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT);
-const unitLocation = Math.PI / rows; // 스크린을 위치할 간격(단위)
-const adjustLocation = unitLocation / 2; // 중간을 시작점으로
-
+const unitPhi = Math.PI / rows;
 for (let i = 0; i < rows; i++) {
-  const location = adjustLocation + i * unitLocation;
-  const circumference = 2 * Math.PI * RADIUS * Math.sin(location); // 2파이r sin세타 (잘라낸 원 둘레)
+  const phiStart = i * unitPhi;
+  const phiLength = unitPhi;
 
-  const cols = Math.ceil(circumference / SCREEN_WIDTH);
-  if (cols < 1) continue; // 스크린 1개도 안들어가면 건너 뛰기
+  const latitude = Math.sin(phiStart + phiLength / 2) * RADIUS;
+  const cols = Math.ceil((2 * Math.PI * latitude) / SCREEN_WIDTH);
+  if (cols < 1) continue;
 
-  // 구의 경도를 나누기
-  const thetaStep = (2 * Math.PI) / cols;
-
+  const thetaLength = (2 * Math.PI) / cols;
   for (let j = 0; j < cols; j++) {
-    const theta = j * thetaStep;
+    const thetaStart = j * thetaLength;
+    const texture = textures[(i * cols + j) % textures.length];
 
-    const mesh = makeScreen();
+    const patch = makePatch(
+      texture,
+      thetaStart,
+      thetaLength,
+      phiStart,
+      phiLength
+    );
 
-    // 구면 → 직교 변환
-    const x = RADIUS * Math.sin(location) * Math.cos(theta);
-    const y = RADIUS * Math.cos(location);
-    const z = RADIUS * Math.sin(location) * Math.sin(theta);
-    mesh.position.set(x, y, z);
-
-    mesh.lookAt(0, 0, 0);
-    screensGroup.add(mesh);
+    screensGroup.add(patch);
   }
 }
 
 scene.add(screensGroup);
 
-// 축 표시
-const axes = new THREE.AxesHelper(50);
-scene.add(axes);
-
-const ambientLight = new THREE.AmbientLight('#ffffff', 1.5);
-scene.add(ambientLight);
-
-const dirLight = new THREE.DirectionalLight('#ffffff', 10);
-dirLight.position.set(5, 8, 5);
-scene.add(dirLight);
-
-// 화면 이펙트를 순서대로 적용해주는 후처리 객체
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-
 window.addEventListener('resize', () => {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  renderer.setSize(width, height);
-  camera.aspect = width / height;
+  const W = window.innerWidth,
+    H = window.innerHeight;
+  renderer.setSize(W, H);
+  camera.aspect = W / H;
   camera.updateProjectionMatrix();
-  composer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(W, H);
 });
 
 function animate() {
   requestAnimationFrame(animate);
-
-  screensGroup.rotation.y += 0.005;
-  composer.render();
-  renderer.render(scene, camera);
-
+  screensGroup.rotation.y += 0.002;
   controls.update();
   composer.render();
 }
