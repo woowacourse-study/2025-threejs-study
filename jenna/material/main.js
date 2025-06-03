@@ -38,7 +38,7 @@ document.body.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 scene.add(new THREE.AxesHelper(2 * RADIUS));
-scene.add(new THREE.AmbientLight('#ffffff', 1.5));
+scene.add(new THREE.AmbientLight('#f2f2ff', 2.8));
 const dirLight = new THREE.DirectionalLight('#ffffff', 2);
 dirLight.position.set(5, 8, 5);
 scene.add(dirLight);
