@@ -16,123 +16,104 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(0, 50, 50);
 
-//renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Controls - 마우스로 카메라 줌, 이동
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
-// scene
 const radians = THREE.MathUtils.degToRad(305);
 const radians2 = THREE.MathUtils.degToRad(-5);
 const radians3 = THREE.MathUtils.degToRad(-70);
 const radians4 = THREE.MathUtils.degToRad(18);
 
 const bassGroup = new THREE.Group();
-
-//상단 픽업
-loadGLBModel("/models/bass-pickup.glb", (model) => {
-  model.position.set(2, 2, 4);
-  model.scale.set(10, 10, 10);
-  model.rotation.set(radians2, radians2, radians);
-  bassGroup.add(model);
-});
-
-//하단 픽업
-loadGLBModel("/models/bass-pickup.glb", (model) => {
-  model.position.set(4, -5, 5);
-  model.scale.set(10, 10, 10);
-  model.rotation.set(radians2, radians2, radians);
-  bassGroup.add(model);
-});
-
-loadGLBModel("/models/bass-bridge.glb", (model) => {
-  model.position.set(6, -12, 6);
-  model.scale.set(7, 7, 7);
-  bassGroup.add(model);
-  model.rotation.set(radians2, 0, radians3);
-});
-
-loadGLBModel("/models/bass-body.glb", (model) => {
-  model.position.set(0, 0, 5);
-  model.scale.set(40, 40, 40);
-  bassGroup.add(model);
-});
-
-loadGLBModel("/models/bass-neck.glb", (model) => {
-  model.position.set(-9, 25, 0);
-  model.scale.set(60, 60, 60);
-  model.rotation.set(radians4, 0, radians4);
-  bassGroup.add(model);
-});
-
 const basePositions = new Map();
+let stringMeshes = [];
 
-// string
-const stringMeshes = setupBassScene(bassGroup, camera, basePositions);
-for (const mesh of stringMeshes) {
-  bassGroup.add(mesh);
+function loadBassModel() {
+  loadGLBModel("/models/bass-pickup.glb", (m) => {
+    m.position.set(2, 2, 4);
+    m.scale.set(10, 10, 10);
+    m.rotation.set(radians2, radians2, radians);
+    bassGroup.add(m);
+  });
+
+  loadGLBModel("/models/bass-pickup.glb", (m) => {
+    m.position.set(4, -5, 5);
+    m.scale.set(10, 10, 10);
+    m.rotation.set(radians2, radians2, radians);
+    bassGroup.add(m);
+  });
+
+  loadGLBModel("/models/bass-bridge.glb", (m) => {
+    m.position.set(6, -12, 6);
+    m.scale.set(7, 7, 7);
+    m.rotation.set(radians2, 0, radians3);
+    bassGroup.add(m);
+  });
+
+  loadGLBModel("/models/bass-body.glb", (m) => {
+    m.position.set(0, 0, 5);
+    m.scale.set(40, 40, 40);
+    bassGroup.add(m);
+  });
+
+  loadGLBModel("/models/bass-neck.glb", (m) => {
+    m.position.set(-9, 25, 0);
+    m.scale.set(60, 60, 60);
+    m.rotation.set(radians4, 0, radians4);
+    bassGroup.add(m);
+  });
 }
-scene.add(bassGroup);
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.2);
-scene.add(ambient);
+function setupLights() {
+  scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+  scene.add(createStage());
 
-//stage
-const stage = createStage();
-scene.add(stage);
+  const keyLight = new THREE.DirectionalLight(0xfff0dd, 3.5);
+  keyLight.position.set(60, 80, 40);
+  keyLight.target = bassGroup;
+  scene.add(keyLight);
+  scene.add(new THREE.DirectionalLightHelper(keyLight, 2, 0xfff0dd));
 
-// Key Light – 메인 조명: 약간 왼쪽 위에서 내려비추는 따뜻한 조명
-const keyLight = new THREE.DirectionalLight(0xfff0dd, 3.5);
-keyLight.position.set(60, 80, 40); // 왼쪽 위 대각선에서
-keyLight.target = bassGroup;
-scene.add(keyLight);
+  const rimLight = new THREE.DirectionalLight(0xaa66ff, 2);
+  rimLight.position.set(-80, 50, -50);
+  rimLight.target = bassGroup;
+  scene.add(rimLight);
+  scene.add(new THREE.DirectionalLightHelper(rimLight, 2, 0xaa66ff));
 
-const keyLightHelper = new THREE.DirectionalLightHelper(keyLight, 2, 0xfff0dd);
-scene.add(keyLightHelper);
+  const bottomLight = new THREE.SpotLight(
+    0xcc0033,
+    800,
+    300,
+    Math.PI / 3,
+    0.8,
+    1
+  );
+  bottomLight.position.set(10, -40, 10);
+  bottomLight.target = bassGroup;
+  scene.add(bottomLight);
+  scene.add(bottomLight.target);
+  scene.add(new THREE.SpotLightHelper(bottomLight, 2, 0xcc0033));
+}
 
-// Rim Light – 후방 윤곽 강조: 오른쪽 뒤에서 보라빛으로 실루엣 부각
-const rimLight = new THREE.DirectionalLight(0xaa66ff, 2);
-rimLight.position.set(-80, 50, -50); // 기타의 우측 뒤에서 오는 느낌
-rimLight.target = bassGroup;
-scene.add(rimLight);
-
-const rimLightHelper = new THREE.DirectionalLightHelper(rimLight, 2, 0xaa66ff);
-scene.add(rimLightHelper);
-
-// Bottom Light – 무대 조명 느낌의 붉은 조명: 아래에서 위로 퍼지도록
-const bottomLight = new THREE.SpotLight(
-  0xcc0033, // 붉은 무대 조명 색
-  800, // 적절한 강도 (600은 과도함)
-  300, // 실제 기타 기준 적절 거리
-  Math.PI / 3, // 부드러운 확산 각도 (~60도)
-  0.8, // 가장자리 부드럽게
-  1 // 감쇠 자연스럽게
-);
-
-bottomLight.position.set(10, -40, 10); // 정면 아래에서 위쪽 방향
-// 원하는 대상에 빔을 쏠 수 있음
-bottomLight.target = bassGroup;
-scene.add(bottomLight);
-scene.add(bottomLight.target);
-
-const bottomLightHelper = new THREE.SpotLightHelper(bottomLight, 2, 0xcc0033);
-scene.add(bottomLightHelper);
-
-let t = 0;
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
 
-  t += 0.006;
-  bassGroup.position.y = Math.sin(t) * 2;
-
+  bassGroup.position.y = Math.sin(performance.now() * 0.0015) * 2;
   vibration(stringMeshes, basePositions);
 
   renderer.render(scene, camera);
 }
 
+loadBassModel();
+setupLights();
+stringMeshes = setupBassScene(bassGroup, camera, scene, basePositions);
+for (const mesh of stringMeshes) {
+  bassGroup.add(mesh);
+}
+scene.add(bassGroup);
 animate();
