@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const baseUrl = import.meta.env.VITE_IMAGE_BASE_URL;
@@ -31,7 +34,6 @@ const SPIN_SPEED = 20;
 const SPAWN_DURATION = 1;
 const MARGIN = 4;
 
-// 사진 이미지 로딩 관리자
 const loadingManager = new THREE.LoadingManager();
 let texturesReady = false;
 
@@ -42,6 +44,14 @@ loadingManager.onLoad = () => {
 
 const loader = new THREE.TextureLoader(loadingManager);
 const textures = SCREEN_IMAGE.map((u) => loader.load(baseUrl + u));
+
+textures.forEach((tex) => {
+  tex.anisotropy =
+    loader.manager.handlers[0].capabilities?.getMaxAnisotropy() || 1;
+  tex.encoding = THREE.sRGBEncoding;
+  tex.minFilter = THREE.LinearMipMapLinearFilter;
+  tex.generateMipmaps = true;
+});
 
 function initScene() {
   const scene = new THREE.Scene();
@@ -55,22 +65,34 @@ function initScene() {
   );
   camera.position.z = RADIUS * 3;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setSize(innerWidth, innerHeight);
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+  renderer.toneMappingWhitePoint = 1.8;
   document.body.appendChild(renderer.domElement);
 
   const controls = new OrbitControls(camera, renderer.domElement);
 
   scene.add(new THREE.AxesHelper(2 * RADIUS));
-  scene.add(new THREE.AmbientLight('#f2f2ff', 2.8));
-  const dirLight = new THREE.DirectionalLight('#ffffff', 2);
-  dirLight.position.set(5, 8, 5);
-  scene.add(dirLight);
+  scene.add(new THREE.AmbientLight('#f2f2ff', 2.0));
 
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
 
-  // 베이스 구체
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(innerWidth, innerHeight),
+    0.6,
+    0.4,
+    0.85
+  );
+  composer.addPass(bloomPass);
+
+  const fxaaPass = new ShaderPass(FXAAShader);
+  fxaaPass.uniforms['resolution'].value.set(1 / innerWidth, 1 / innerHeight);
+  composer.addPass(fxaaPass);
+
   const screensGroup = new THREE.Group();
   {
     const SCREEN_WIDTH = 5,
@@ -92,7 +114,9 @@ function initScene() {
           map: tex,
           side: THREE.DoubleSide,
           emissive: '#111111',
+          emissiveIntensity: 1,
           roughness: 0.8,
+          metalness: 0.1,
         });
         screensGroup.add(new THREE.Mesh(geo, mat));
       }
@@ -165,8 +189,6 @@ function initScene() {
       if (elapsed >= SPIN_DURATION) {
         isSpinning = false;
       }
-
-      // 회전 중에 이미지 튀어나오기
       spawnData.forEach((data) => {
         if (now >= data.spawnTime && !data.mesh) {
           const img = data.tex.image;
@@ -175,9 +197,11 @@ function initScene() {
             aspect * PLANE_HEIGHT,
             PLANE_HEIGHT
           );
-          const mat = new THREE.MeshBasicMaterial({
+          const mat = new THREE.MeshStandardMaterial({
             map: data.tex,
             side: THREE.DoubleSide,
+            roughness: 0.5,
+            metalness: 0.1,
           });
           const m = new THREE.Mesh(geo, mat);
           m.position.copy(clickPoint);
