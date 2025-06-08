@@ -15,6 +15,13 @@ const SCREEN_IMAGE = [
   '/v1748973468/Study/Three.js/seolleung.jpg',
   '/v1748973453/Study/Three.js/bossam.jpg',
   '/v1748973446/Study/Three.js/fe_hangsungee.jpg',
+  '/v1749379638/Study/Three.js/ramen.jpg',
+  '/v1749379638/Study/Three.js/pairRoom.jpg',
+  '/v1749379639/Study/Three.js/ground.jpg',
+  '/v1749379638/Study/Three.js/portrait.jpg',
+  '/v1749379639/Study/Three.js/bottle.jpg',
+  '/v1749379639/Study/Three.js/takeoff.jpg',
+  '/v1749379910/Study/Three.js/techotalk.png',
 ];
 
 const SCREEN_WIDTH = 5;
