@@ -26,10 +26,10 @@ const SCREEN_IMAGE = [
 
 const RADIUS = 5;
 const PLANE_HEIGHT = 2;
-const SPIN_DURATION = 0.5; // 구가 빠르게 도는 시간 (초)
-const SPIN_SPEED = 20; // 초당 회전량 (rad/s)
-const SPAWN_DURATION = 1.0; // 사진 튀어나오는 애니메이션 시간 (초)
-const MARGIN = 4; // 구 반지름 바깥 여유 거리
+const SPIN_DURATION = 0.5;
+const SPIN_SPEED = 20;
+const SPAWN_DURATION = 0.7;
+const MARGIN = 4;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#00023a');
