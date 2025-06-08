@@ -55,7 +55,7 @@ textures.forEach((tex) => {
 
 function initScene() {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#00023a');
+  scene.background = new THREE.Color('#001155');
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -69,23 +69,36 @@ function initScene() {
   renderer.setSize(innerWidth, innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
-  renderer.toneMappingWhitePoint = 1.8;
+  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingWhitePoint = 1.0;
   document.body.appendChild(renderer.domElement);
 
   const controls = new OrbitControls(camera, renderer.domElement);
 
   scene.add(new THREE.AxesHelper(2 * RADIUS));
-  scene.add(new THREE.AmbientLight('#f2f2ff', 2.0));
+
+  scene.add(new THREE.AmbientLight('#ffffff', 2.0));
+
+  const directionalLight = new THREE.DirectionalLight('#ffffff', 1.5);
+  directionalLight.position.set(5, 5, 5);
+  scene.add(directionalLight);
+
+  const directionalLight2 = new THREE.DirectionalLight('#ffffff', 1.0);
+  directionalLight2.position.set(-5, -5, -5);
+  scene.add(directionalLight2);
+
+  const topLight = new THREE.DirectionalLight('#ffffff', 0.8);
+  topLight.position.set(0, 10, 0);
+  scene.add(topLight);
 
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
 
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(innerWidth, innerHeight),
-    0.6,
-    0.4,
-    0.85
+    0.15,
+    0.2,
+    0.95
   );
   composer.addPass(bloomPass);
 
@@ -113,10 +126,10 @@ function initScene() {
         const mat = new THREE.MeshStandardMaterial({
           map: tex,
           side: THREE.DoubleSide,
-          emissive: '#111111',
-          emissiveIntensity: 1,
-          roughness: 0.8,
-          metalness: 0.1,
+          emissive: '#000000',
+          emissiveIntensity: 0,
+          roughness: 0.4,
+          metalness: 0.05,
         });
         screensGroup.add(new THREE.Mesh(geo, mat));
       }
@@ -200,8 +213,10 @@ function initScene() {
           const mat = new THREE.MeshStandardMaterial({
             map: data.tex,
             side: THREE.DoubleSide,
-            roughness: 0.5,
-            metalness: 0.1,
+            roughness: 0.3,
+            metalness: 0.05,
+            emissive: '#000000',
+            emissiveIntensity: 0,
           });
           const m = new THREE.Mesh(geo, mat);
           m.position.copy(clickPoint);
