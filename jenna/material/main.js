@@ -57,7 +57,19 @@ textures.forEach((tex) => {
   tex.generateMipmaps = true;
 });
 
+function createCircleTexture(size = 64) {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+  ctx.fill();
+  return new THREE.CanvasTexture(canvas);
+}
+
 function initScene() {
+  const circleTex = createCircleTexture();
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#001155');
 
@@ -209,9 +221,10 @@ function initScene() {
     size: 0.15,
     vertexColors: true,
     transparent: true,
-    opacity: 1.0,
+    alphaTest: 0.5,
     blending: THREE.AdditiveBlending,
     sizeAttenuation: true,
+    map: circleTex,
   });
 
   const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
