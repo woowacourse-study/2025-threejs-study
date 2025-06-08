@@ -34,6 +34,11 @@ const SPIN_SPEED = 20;
 const SPAWN_DURATION = 1;
 const MARGIN = 4;
 
+// 파티클 관련 상수
+const PARTICLE_COUNT = 200;
+const PARTICLE_SPEED = 8;
+const PARTICLE_LIFE = 2;
+
 const loadingManager = new THREE.LoadingManager();
 let texturesReady = false;
 
@@ -137,6 +142,91 @@ function initScene() {
   }
   scene.add(screensGroup);
 
+  // 파티클 시스템 생성
+  const particleGeometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(PARTICLE_COUNT * 3);
+  const velocities = new Float32Array(PARTICLE_COUNT * 3);
+  const lifeTimes = new Float32Array(PARTICLE_COUNT);
+  const colors = new Float32Array(PARTICLE_COUNT * 3);
+  const sizes = new Float32Array(PARTICLE_COUNT);
+  const initialPositions = new Float32Array(PARTICLE_COUNT * 3); // 구 표면의 초기 위치 저장
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const i3 = i * 3;
+
+    // 구 표면의 랜덤한 위치 생성
+    const phi = Math.random() * Math.PI * 2;
+    const cosTheta = 2 * Math.random() - 1;
+    const theta = Math.acos(cosTheta);
+
+    const sphereX = Math.sin(theta) * Math.cos(phi) * RADIUS;
+    const sphereY = Math.cos(theta) * RADIUS;
+    const sphereZ = Math.sin(theta) * Math.sin(phi) * RADIUS;
+
+    // 초기 위치는 구 표면
+    positions[i3] = sphereX;
+    positions[i3 + 1] = sphereY;
+    positions[i3 + 2] = sphereZ;
+
+    // 초기 위치 저장 (재활용할 때 사용)
+    initialPositions[i3] = sphereX;
+    initialPositions[i3 + 1] = sphereY;
+    initialPositions[i3 + 2] = sphereZ;
+
+    // 구 표면에서 바깥쪽으로 향하는 속도 (법선 방향)
+    const normalX = sphereX / RADIUS;
+    const normalY = sphereY / RADIUS;
+    const normalZ = sphereZ / RADIUS;
+
+    velocities[i3] = normalX * PARTICLE_SPEED;
+    velocities[i3 + 1] = normalY * PARTICLE_SPEED;
+    velocities[i3 + 2] = normalZ * PARTICLE_SPEED;
+
+    // 생명주기 랜덤 설정
+    lifeTimes[i] = Math.random() * PARTICLE_LIFE;
+
+    // 순수한 흰색 빛
+    colors[i3] = 1.0; // R - 순수한 흰색
+    colors[i3 + 1] = 1.0; // G
+    colors[i3 + 2] = 1.0; // B
+
+    // 크기 설정 (더 큰 파티클로 강렬한 빛 효과)
+    sizes[i] = Math.random() * 0.15 + 0.1;
+  }
+
+  particleGeometry.setAttribute(
+    'initialPosition',
+    new THREE.BufferAttribute(initialPositions, 3)
+  );
+
+  particleGeometry.setAttribute(
+    'position',
+    new THREE.BufferAttribute(positions, 3)
+  );
+  particleGeometry.setAttribute(
+    'velocity',
+    new THREE.BufferAttribute(velocities, 3)
+  );
+  particleGeometry.setAttribute(
+    'lifeTime',
+    new THREE.BufferAttribute(lifeTimes, 1)
+  );
+  particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+  const particleMaterial = new THREE.PointsMaterial({
+    size: 0.15, // 크기 증가로 더 강렬한 빛
+    vertexColors: true,
+    transparent: true,
+    opacity: 1.0, // 불투명도 증가
+    blending: THREE.AdditiveBlending,
+    sizeAttenuation: true,
+  });
+
+  const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+  particleSystem.visible = false; // 처음에는 보이지 않음
+  scene.add(particleSystem);
+
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
   let lastTime = 0;
@@ -158,6 +248,55 @@ function initScene() {
 
     isSpinning = true;
     spinStartTime = performance.now() / 1000;
+
+    // 파티클 시스템 활성화
+    particleSystem.visible = true;
+
+    // 모든 파티클을 구 표면의 초기 위치로 리셋
+    const positions = particleSystem.geometry.attributes.position.array;
+    const initialPositions =
+      particleSystem.geometry.attributes.initialPosition.array;
+    const lifeTimes = particleSystem.geometry.attributes.lifeTime.array;
+    const velocities = particleSystem.geometry.attributes.velocity.array;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const i3 = i * 3;
+
+      // 새로운 구 표면 위치 생성
+      const phi = Math.random() * Math.PI * 2;
+      const cosTheta = 2 * Math.random() - 1;
+      const theta = Math.acos(cosTheta);
+
+      const sphereX = Math.sin(theta) * Math.cos(phi) * RADIUS;
+      const sphereY = Math.cos(theta) * RADIUS;
+      const sphereZ = Math.sin(theta) * Math.sin(phi) * RADIUS;
+
+      // 위치 설정
+      positions[i3] = sphereX;
+      positions[i3 + 1] = sphereY;
+      positions[i3 + 2] = sphereZ;
+
+      // 초기 위치 업데이트
+      initialPositions[i3] = sphereX;
+      initialPositions[i3 + 1] = sphereY;
+      initialPositions[i3 + 2] = sphereZ;
+
+      // 구 표면에서 바깥쪽으로 향하는 속도
+      const normalX = sphereX / RADIUS;
+      const normalY = sphereY / RADIUS;
+      const normalZ = sphereZ / RADIUS;
+
+      velocities[i3] = normalX * PARTICLE_SPEED;
+      velocities[i3 + 1] = normalY * PARTICLE_SPEED;
+      velocities[i3 + 2] = normalZ * PARTICLE_SPEED;
+
+      lifeTimes[i] = 0; // 생명주기 리셋
+    }
+
+    particleSystem.geometry.attributes.position.needsUpdate = true;
+    particleSystem.geometry.attributes.initialPosition.needsUpdate = true;
+    particleSystem.geometry.attributes.velocity.needsUpdate = true;
+    particleSystem.geometry.attributes.lifeTime.needsUpdate = true;
 
     if (floatingGroup) {
       scene.remove(floatingGroup);
@@ -190,6 +329,72 @@ function initScene() {
     });
   });
 
+  function updateParticles(dt) {
+    if (!particleSystem.visible) return;
+
+    const positions = particleSystem.geometry.attributes.position.array;
+    const velocities = particleSystem.geometry.attributes.velocity.array;
+    const lifeTimes = particleSystem.geometry.attributes.lifeTime.array;
+    const colors = particleSystem.geometry.attributes.color.array;
+    const initialPositions =
+      particleSystem.geometry.attributes.initialPosition.array;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const i3 = i * 3;
+
+      // 생명주기 업데이트
+      lifeTimes[i] += dt;
+
+      if (lifeTimes[i] < PARTICLE_LIFE) {
+        // 위치 업데이트
+        positions[i3] += velocities[i3] * dt;
+        positions[i3 + 1] += velocities[i3 + 1] * dt;
+        positions[i3 + 2] += velocities[i3 + 2] * dt;
+
+        // 중력 효과 (약간)
+        velocities[i3 + 1] -= 0.5 * dt;
+
+        // 알파 값 계산 (더 강렬하고 오래 지속되는 빛)
+        const alpha = Math.max(0.3, 1 - lifeTimes[i] / PARTICLE_LIFE); // 최소 30% 밝기 유지
+        colors[i3] = alpha; // R - 순수한 흰색
+        colors[i3 + 1] = alpha; // G
+        colors[i3 + 2] = alpha; // B
+      } else {
+        // 파티클 재활용 - 구 표면의 새로운 랜덤 위치로 이동
+        const phi = Math.random() * Math.PI * 2;
+        const cosTheta = 2 * Math.random() - 1;
+        const theta = Math.acos(cosTheta);
+
+        const sphereX = Math.sin(theta) * Math.cos(phi) * RADIUS;
+        const sphereY = Math.cos(theta) * RADIUS;
+        const sphereZ = Math.sin(theta) * Math.sin(phi) * RADIUS;
+
+        positions[i3] = sphereX;
+        positions[i3 + 1] = sphereY;
+        positions[i3 + 2] = sphereZ;
+
+        // 초기 위치 업데이트
+        initialPositions[i3] = sphereX;
+        initialPositions[i3 + 1] = sphereY;
+        initialPositions[i3 + 2] = sphereZ;
+
+        lifeTimes[i] = 0;
+
+        // 구 표면에서 바깥쪽으로 향하는 새로운 속도
+        const normalX = sphereX / RADIUS;
+        const normalY = sphereY / RADIUS;
+        const normalZ = sphereZ / RADIUS;
+
+        velocities[i3] = normalX * PARTICLE_SPEED;
+        velocities[i3 + 1] = normalY * PARTICLE_SPEED;
+        velocities[i3 + 2] = normalZ * PARTICLE_SPEED;
+      }
+    }
+
+    particleSystem.geometry.attributes.position.needsUpdate = true;
+    particleSystem.geometry.attributes.color.needsUpdate = true;
+  }
+
   function animate(time) {
     requestAnimationFrame(animate);
     const now = time / 1000;
@@ -199,9 +404,18 @@ function initScene() {
     if (isSpinning) {
       const elapsed = now - spinStartTime;
       screensGroup.rotation.y += SPIN_SPEED * dt;
+
+      // 파티클 업데이트
+      updateParticles(dt);
+
       if (elapsed >= SPIN_DURATION) {
         isSpinning = false;
+        // 회전이 끝나면 파티클도 서서히 사라지도록
+        setTimeout(() => {
+          particleSystem.visible = false;
+        }, PARTICLE_LIFE * 1000);
       }
+
       spawnData.forEach((data) => {
         if (now >= data.spawnTime && !data.mesh) {
           const img = data.tex.image;
