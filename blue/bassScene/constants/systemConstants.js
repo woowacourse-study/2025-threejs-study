@@ -25,3 +25,5 @@ export const STRING_CONSTANTS = [
 		scale: 0.06,
 	},
 ];
+
+export const SOUND_FILE_ARRAY = ["sound1", "sound2", "sound3", "sound4"];

@@ -1,4 +1,4 @@
-import { loadGLBModel } from "../../loaders/loadGLBModel";
+import { loadGLBModel } from "../loaders/loadGLBModel";
 
 const createNote = () => {
 	return new Promise((resolve) => {

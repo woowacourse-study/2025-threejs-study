@@ -1,8 +1,11 @@
 import * as THREE from "three";
-import { createBassStrings } from "../public/util/createBassString";
+import { createBassStrings } from "../scene/createBassString";
 import { startStringVibration } from "../animation/vibration";
-import { createNotes } from "../public/util/createNote";
+import { createNotes } from "../scene/createNote";
 import { startParabolaAnimation } from "../animation/parabola";
+import { loadSound } from "../loaders/loadSound";
+import { getRandomElement } from "../util/getRandomElement";
+import { SOUND_FILE_ARRAY } from "../constants/systemConstants";
 
 export const setUpBassStringInteraction = (
 	bassGroup,
@@ -14,7 +17,7 @@ export const setUpBassStringInteraction = (
 	const raycaster = new THREE.Raycaster();
 	const mouse = new THREE.Vector2();
 
-	window.addEventListener("click", (event) => {
+	window.addEventListener("click", async (event) => {
 		mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 		mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -23,7 +26,13 @@ export const setUpBassStringInteraction = (
 
 		if (intersects.length > 0) {
 			startStringVibration();
-			// TODO : 소리 삽입
+			const listener = new THREE.AudioListener();
+			camera.add(listener);
+			const randomRoute = getRandomElement(SOUND_FILE_ARRAY);
+			const soundRoute = `/sounds/${randomRoute}.mp3`;
+			const sound = await loadSound(soundRoute, listener);
+			sound.play();
+
 			createNotes(2).then((notes) => {
 				bassGroup.add(...notes);
 				notes.map((note) => startParabolaAnimation(note));

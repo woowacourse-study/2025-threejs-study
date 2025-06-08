@@ -3,7 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { loadGLBModel } from "./loaders/loadGLBModel";
 import { setUpBassStringInteraction } from "./setup/setUpBassString";
 import { vibration } from "./animation/vibration";
-import { createStage } from "./public/util/createStage";
+import { createStage } from "./scene/createStage";
 import { parabola } from "./animation/parabola";
 import { bounce, startBounceAnimation } from "./animation/bounce";
 

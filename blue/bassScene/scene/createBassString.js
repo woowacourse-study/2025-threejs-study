@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { STRING_CONSTANTS } from "../../constants/systemConstants";
+import { STRING_CONSTANTS } from "../constants/systemConstants";
 
 const createBassString = (start, end, scale = 0.1) => {
 	const startVector = new THREE.Vector3(start.x, start.y, start.z);
