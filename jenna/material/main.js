@@ -442,10 +442,11 @@ function initScene() {
     });
 
     if (!isSpinning && floatingGroup) {
-      floatingGroup.rotation.y += 0.001;
+      floatingGroup.rotation.y += 0.002;
       floatingGroup.children.forEach((m) => m.lookAt(camera.position));
     }
 
+    screensGroup.rotation.y += 0.002;
     controls.update();
     composer.render();
   }
