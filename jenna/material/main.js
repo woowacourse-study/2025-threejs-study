@@ -26,175 +26,187 @@ const SCREEN_IMAGE = [
 
 const RADIUS = 5;
 const PLANE_HEIGHT = 2;
-const SPIN_DURATION = 0.5;
+const SPIN_DURATION = 1;
 const SPIN_SPEED = 20;
-const SPAWN_DURATION = 0.7;
+const SPAWN_DURATION = 1;
 const MARGIN = 4;
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color('#00023a');
+// 사진 이미지 로딩 관리자
+const loadingManager = new THREE.LoadingManager();
+let texturesReady = false;
 
-const camera = new THREE.PerspectiveCamera(
-  75,
-  innerWidth / innerHeight,
-  0.1,
-  1000
-);
-camera.position.z = RADIUS * 3;
+loadingManager.onLoad = () => {
+  texturesReady = true;
+  initScene();
+};
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-document.body.appendChild(renderer.domElement);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-
-scene.add(new THREE.AxesHelper(2 * RADIUS));
-scene.add(new THREE.AmbientLight('#f2f2ff', 2.8));
-const dirLight = new THREE.DirectionalLight('#ffffff', 2);
-dirLight.position.set(5, 8, 5);
-scene.add(dirLight);
-
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-
-const loader = new THREE.TextureLoader();
+const loader = new THREE.TextureLoader(loadingManager);
 const textures = SCREEN_IMAGE.map((u) => loader.load(baseUrl + u));
 
-const screensGroup = new THREE.Group();
-{
-  const SCREEN_WIDTH = 5,
-    SCREEN_HEIGHT = 3;
-  const rows = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT) + 2;
-  const unitΘ = Math.PI / rows;
-  for (let i = 1; i < rows - 1; i++) {
-    const θ0 = i * unitΘ,
-      θLen = unitΘ;
-    const lat = Math.sin(θ0 + θLen / 2) * RADIUS;
-    const cols = Math.ceil((2 * Math.PI * lat) / SCREEN_WIDTH);
-    if (cols < 1) continue;
-    const φLen = (2 * Math.PI) / cols;
-    for (let j = 0; j < cols; j++) {
-      const φ0 = j * φLen;
-      const tex = textures[(i * cols + j) % textures.length];
-      const geo = new THREE.SphereGeometry(RADIUS, 1, 1, φ0, φLen, θ0, θLen);
-      const mat = new THREE.MeshStandardMaterial({
-        map: tex,
-        side: THREE.DoubleSide,
-        emissive: '#111111',
-        roughness: 0.8,
-      });
-      screensGroup.add(new THREE.Mesh(geo, mat));
+function initScene() {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('#00023a');
+
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    innerWidth / innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = RADIUS * 3;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(innerWidth, innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+
+  scene.add(new THREE.AxesHelper(2 * RADIUS));
+  scene.add(new THREE.AmbientLight('#f2f2ff', 2.8));
+  const dirLight = new THREE.DirectionalLight('#ffffff', 2);
+  dirLight.position.set(5, 8, 5);
+  scene.add(dirLight);
+
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+
+  // 베이스 구체
+  const screensGroup = new THREE.Group();
+  {
+    const SCREEN_WIDTH = 5,
+      SCREEN_HEIGHT = 3;
+    const rows = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT) + 2;
+    const unitΘ = Math.PI / rows;
+    for (let i = 1; i < rows - 1; i++) {
+      const θ0 = i * unitΘ,
+        θLen = unitΘ;
+      const lat = Math.sin(θ0 + θLen / 2) * RADIUS;
+      const cols = Math.ceil((2 * Math.PI * lat) / SCREEN_WIDTH);
+      if (cols < 1) continue;
+      const φLen = (2 * Math.PI) / cols;
+      for (let j = 0; j < cols; j++) {
+        const φ0 = j * φLen;
+        const tex = textures[(i * cols + j) % textures.length];
+        const geo = new THREE.SphereGeometry(RADIUS, 1, 1, φ0, φLen, θ0, θLen);
+        const mat = new THREE.MeshStandardMaterial({
+          map: tex,
+          side: THREE.DoubleSide,
+          emissive: '#111111',
+          roughness: 0.8,
+        });
+        screensGroup.add(new THREE.Mesh(geo, mat));
+      }
     }
   }
-}
-scene.add(screensGroup);
+  scene.add(screensGroup);
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  let lastTime = 0;
+  let isSpinning = false;
+  let spinStartTime = 0;
+  let clickPoint = new THREE.Vector3();
+  let floatingGroup = null;
+  let spawnData = [];
 
-let lastTime = 0;
-let isSpinning = false;
-let spinStartTime = 0;
-let spawnStartTime = 0;
-let clickPoint = new THREE.Vector3();
-let floatingGroup = null;
-let spawnPlanes = [];
+  window.addEventListener('click', (e) => {
+    if (!texturesReady) return;
 
-window.addEventListener('click', (e) => {
-  mouse.x = (e.clientX / innerWidth) * 2 - 1;
-  mouse.y = -(e.clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse, camera);
-  const hits = raycaster.intersectObjects(screensGroup.children, true);
-  if (!hits.length) return;
-  clickPoint.copy(hits[0].point);
+    mouse.x = (e.clientX / innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(screensGroup.children, true);
+    if (!hits.length) return;
+    clickPoint.copy(hits[0].point);
 
-  isSpinning = true;
-  spinStartTime = performance.now() / 1000;
-  spawnStartTime = 0;
-  if (floatingGroup) {
-    scene.remove(floatingGroup);
-    floatingGroup.children.forEach((m) => {
-      m.geometry.dispose();
-      m.material.dispose();
-    });
-    floatingGroup = null;
-    spawnPlanes = [];
-  }
-});
+    isSpinning = true;
+    spinStartTime = performance.now() / 1000;
 
-function spawnImages() {
-  floatingGroup = new THREE.Group();
-  scene.add(floatingGroup);
-  const spawnR = RADIUS + MARGIN;
-  textures.forEach((tex) => {
-    const img = tex.image;
-    const aspect = img.width && img.height ? img.width / img.height : 1;
-    const geo = new THREE.PlaneGeometry(aspect * PLANE_HEIGHT, PLANE_HEIGHT);
-    const mat = new THREE.MeshBasicMaterial({
-      map: tex,
-      side: THREE.DoubleSide,
-    });
-    const mesh = new THREE.Mesh(geo, mat);
+    if (floatingGroup) {
+      scene.remove(floatingGroup);
+      floatingGroup.children.forEach((m) => {
+        m.geometry.dispose();
+        m.material.dispose();
+      });
+    }
+    floatingGroup = new THREE.Group();
+    scene.add(floatingGroup);
 
-    const φ = Math.random() * Math.PI * 2;
-    const cosθ = 2 * Math.random() - 1;
-    const θ = Math.acos(cosθ);
-    const dir = new THREE.Vector3(
-      Math.sin(θ) * Math.cos(φ),
-      Math.cos(θ),
-      Math.sin(θ) * Math.sin(φ)
-    );
-    const targetPos = dir.clone().multiplyScalar(spawnR);
-
-    mesh.position.copy(clickPoint);
-    mesh.lookAt(camera.position);
-
-    floatingGroup.add(mesh);
-    spawnPlanes.push({
-      mesh,
-      startPos: clickPoint.clone(),
-      targetPos,
+    spawnData = textures.map((tex, i) => {
+      const φ = Math.random() * Math.PI * 2;
+      const cosθ = 2 * Math.random() - 1;
+      const θ = Math.acos(cosθ);
+      const dir = new THREE.Vector3(
+        Math.sin(θ) * Math.cos(φ),
+        Math.cos(θ),
+        Math.sin(θ) * Math.sin(φ)
+      );
+      const targetPos = dir.multiplyScalar(RADIUS + MARGIN);
+      const delay = (i / textures.length) * SPIN_DURATION;
+      return {
+        tex,
+        targetPos,
+        spawnTime: spinStartTime + delay,
+        mesh: null,
+        startTime: null,
+      };
     });
   });
 
-  spawnStartTime = performance.now() / 1000;
-}
+  function animate(time) {
+    requestAnimationFrame(animate);
+    const now = time / 1000;
+    const dt = now - lastTime;
+    lastTime = now;
 
-function animate(time) {
-  requestAnimationFrame(animate);
-  const now = time / 1000;
-  const dt = now - lastTime;
-  lastTime = now;
+    if (isSpinning) {
+      const elapsed = now - spinStartTime;
+      screensGroup.rotation.y += SPIN_SPEED * dt;
+      if (elapsed >= SPIN_DURATION) {
+        isSpinning = false;
+      }
 
-  if (isSpinning) {
-    const elapsed = now - spinStartTime;
-    screensGroup.rotation.y += SPIN_SPEED * dt;
-    if (elapsed >= SPIN_DURATION) {
-      isSpinning = false;
-      spawnImages();
+      // 회전 중에 이미지 튀어나오기
+      spawnData.forEach((data) => {
+        if (now >= data.spawnTime && !data.mesh) {
+          const img = data.tex.image;
+          const aspect = img.width && img.height ? img.width / img.height : 1;
+          const geo = new THREE.PlaneGeometry(
+            aspect * PLANE_HEIGHT,
+            PLANE_HEIGHT
+          );
+          const mat = new THREE.MeshBasicMaterial({
+            map: data.tex,
+            side: THREE.DoubleSide,
+          });
+          const m = new THREE.Mesh(geo, mat);
+          m.position.copy(clickPoint);
+          floatingGroup.add(m);
+          data.mesh = m;
+          data.startTime = now;
+        }
+      });
     }
-  }
 
-  if (spawnStartTime) {
-    const elapsed = now - spawnStartTime;
-    const p = Math.min(elapsed / SPAWN_DURATION, 1);
-    const ease = 1 - Math.pow(1 - p, 2);
-    spawnPlanes.forEach(({ mesh, startPos, targetPos }) => {
-      mesh.position.lerpVectors(startPos, targetPos, ease);
-      mesh.lookAt(camera.position);
+    spawnData.forEach((data) => {
+      if (data.mesh && data.startTime !== null) {
+        const t = (now - data.startTime) / SPAWN_DURATION;
+        const p = Math.min(Math.max(t, 0), 1);
+        const ease = 1 - Math.pow(1 - p, 2);
+        data.mesh.position.lerpVectors(clickPoint, data.targetPos, ease);
+        data.mesh.lookAt(camera.position);
+        if (p >= 1) data.startTime = null;
+      }
     });
-    if (p >= 1) {
-      spawnStartTime = 0;
+
+    if (!isSpinning && floatingGroup) {
+      floatingGroup.rotation.y += 0.001;
+      floatingGroup.children.forEach((m) => m.lookAt(camera.position));
     }
+
+    controls.update();
+    composer.render();
   }
 
-  if (floatingGroup && !spawnStartTime) {
-    floatingGroup.rotation.y += 0.001;
-    floatingGroup.children.forEach((m) => m.lookAt(camera.position));
-  }
-
-  controls.update();
-  composer.render();
+  requestAnimationFrame(animate);
 }
-
-requestAnimationFrame(animate);
