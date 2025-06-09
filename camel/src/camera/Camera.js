@@ -26,4 +26,9 @@ const setupControls = (controls) => {
     controls.dampingFactor = 0.05;
     controls.enablePan = true;
     controls.enableZoom = true;
+    controls.enableRotate = true;
+    controls.rotateSpeed = 0.5;
+    controls.minDistance = 3;
+    controls.maxDistance = 20;
+    controls.maxPolarAngle = Math.PI / 2;
 }; 

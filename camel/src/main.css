@@ -4,6 +4,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .talk-container {
@@ -14,6 +15,7 @@
   width: 100%;
   height: 300px;
   bottom: 0;
+  pointer-events: none;
 }
 
 .speech-bubble-container {
@@ -21,6 +23,7 @@
   max-width: 800px;
   bottom: 80px;
   min-width: 400px;
+  pointer-events: none;
 }
 
 .character-name {
