@@ -5,6 +5,7 @@ import { setupLights } from "./lights/Lights";
 import { createModelLoader } from "./models/ModelLoader";
 import { createKeyboardControls } from "./controls/KeyboardControls";
 import { createSpeechBubble } from "./ui/SpeechBubble";
+import { createRaycasterControls } from "./controls/RaycasterControls";
 
 const init = () => {
   // 렌더러 설정
@@ -19,7 +20,16 @@ const init = () => {
   setupLights(scene);
   const { loadModel, update: updateModels } = createModelLoader(scene);
   const { update: updateKeyboard } = createKeyboardControls(camera, controls);
-  createSpeechBubble();
+  const { showSpeech } = createSpeechBubble();
+
+  // Raycaster 설정
+  const cleanupRaycaster = createRaycasterControls(scene, camera, (objectName) => {
+    if (objectName === 'camel') {
+      showSpeech('camel');
+    } else if (objectName === 'drMartin') {
+      showSpeech('drMartin');
+    }
+  });
 
   // 모델 로딩
   loadModels(loadModel);
@@ -36,6 +46,11 @@ const init = () => {
 
     renderer.render(scene, camera);
   }
+
+  // 컴포넌트 언마운트 시 클린업
+  return () => {
+    cleanupRaycaster();
+  };
 };
 
 const loadModels = async (loadModel) => {

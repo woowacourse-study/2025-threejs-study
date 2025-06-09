@@ -24,6 +24,8 @@
   bottom: 80px;
   min-width: 400px;
   pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
 .character-name {
@@ -116,14 +118,12 @@
   }
 }
 
-/* Interactive hover effect */
 .speech-bubble:hover {
   transform: scale(1.02);
   transition: transform 0.3s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Responsive design */
 @media (max-width: 480px) {
   .speech-bubble {
     padding: 15px 20px;

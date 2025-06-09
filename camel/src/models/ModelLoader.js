@@ -11,6 +11,7 @@ export const createModelLoader = (scene) => {
             });
 
             const model = gltf.scene;
+            model.name = name;
             model.scale.set(scale, scale, scale);
             model.position.set(position.x, position.y, position.z);
             model.rotation.set(rotation.x, rotation.y, rotation.z);
