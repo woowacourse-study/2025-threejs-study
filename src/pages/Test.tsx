@@ -5,9 +5,9 @@ const Test = () => {
   return (
     <div>
       <h1>Test Component</h1>
-      {PROFILE.map((profile, index) => (
+      {PROFILE.map((profile) => (
         <Profile
-          key={index}
+          key={profile.id}
           name={profile.name}
           imgUrl={profile.imgUrl}
           linkUrl={profile.linkUrl}
