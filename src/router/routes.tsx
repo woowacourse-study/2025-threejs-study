@@ -1,8 +1,9 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
+import Test from '../pages/Test';
 
 export const router = createBrowserRouter([
-	// {
-	// 	path: "/",
-	// 	element: <Page />,
-	// },
+  {
+    path: '/',
+    element: <Test />,
+  },
 ]);
