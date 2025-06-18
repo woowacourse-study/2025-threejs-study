@@ -47,8 +47,6 @@ const ProfileImage = styled.img`
   height: 250px;
   object-fit: cover;
   border-radius: 50%;
-  clip-path: circle(50% at 50% 50%);
-  cursor: pointer;
 `;
 
 const ProfileNameContainer = styled.div`
