@@ -7,16 +7,15 @@ type ProfileProps = {
 };
 
 const Profile = ({ name, imgUrl, linkUrl }: ProfileProps) => {
-  const handleClick = () => {
-    window.open(linkUrl, '_blank', 'noopener,noreferrer');
-  };
-
   return (
     <ProfileContainer>
-      <ProfileImage src={imgUrl} alt="Profile" onClick={handleClick} />
-
+      <ProfileLink href={linkUrl} target="_blank" rel="noopener noreferrer">
+        <ProfileImage src={imgUrl} alt="Profile" />
+      </ProfileLink>
       <ProfileNameContainer>
-        <ProfileName onClick={handleClick}>{name}</ProfileName>
+        <ProfileName href={linkUrl} target="_blank" rel="noopener noreferrer">
+          {name}
+        </ProfileName>
       </ProfileNameContainer>
     </ProfileContainer>
   );
@@ -32,6 +31,15 @@ const ProfileContainer = styled.div`
   justify-content: space-between;
   text-decoration: none;
   color: inherit;
+`;
+
+const ProfileLink = styled.a`
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
 `;
 
 const ProfileImage = styled.img`
@@ -52,6 +60,8 @@ const ProfileNameContainer = styled.div`
   ${({ theme }) => theme.fonts.subHeading};
 `;
 
-const ProfileName = styled.span`
+const ProfileName = styled.a`
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
 `;
