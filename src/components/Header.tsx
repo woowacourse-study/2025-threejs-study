@@ -1,0 +1,58 @@
+import { Link } from 'react-router-dom';
+import GithubIcon from '../assets/github-mark.svg';
+import styled from '@emotion/styled';
+
+const Header = () => {
+  return (
+    <StyledHeader>
+      <Navigator>
+        <Link to={'/'}>Gallery</Link>
+        <Link to={'/'}>AboutUs</Link>
+      </Navigator>
+
+      <Title>Five.js</Title>
+
+      <ExternalLink>
+        <Link to={'/'}>
+          <img src={GithubIcon} alt='깃허브 아이콘' />
+        </Link>
+      </ExternalLink>
+    </StyledHeader>
+  );
+};
+
+export default Header;
+
+const StyledHeader = styled.header(({ theme }) => ({
+  padding: '30px 0',
+
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  textAlign: 'center',
+  ...theme.fonts.subHeading,
+}));
+
+const Navigator = styled.nav(({ theme }) => ({
+  flex: 3,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '24px',
+
+  a: {
+    '&:hover': {
+      transition: 'color 0.2s ease',
+      color: theme.colors.gray2,
+    },
+  },
+}));
+
+const Title = styled.h1`
+  flex: 6;
+`;
+
+const ExternalLink = styled.div`
+  flex: 3;
+`;
