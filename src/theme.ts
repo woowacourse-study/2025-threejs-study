@@ -7,19 +7,16 @@ export const theme = {
   },
   fonts: {
     header: {
-      fontFamily: 'sans-serif',
       fontSize: '32px',
       lineHeight: '44px',
       fontWeight: 700,
     },
     subHeading: {
-      fontFamily: 'sans-serif',
       fontSize: '16px',
       lineHeight: '19px',
       fontWeight: 500,
     },
     body: {
-      fontFamily: 'sans-serif',
       fontSize: '12px',
       lineHeight: 'normal',
       fontWeight: 400,
