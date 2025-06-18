@@ -34,6 +34,10 @@ const SceneCardImage = styled.img`
   object-fit: cover;
   cursor: pointer;
   box-shadow: -3px 3px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const SceneName = styled.h3`
