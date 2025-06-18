@@ -40,11 +40,10 @@ const SceneCardImage = styled.img`
   }
 `;
 
-const SceneName = styled.h3`
-  font-size: ${({ theme }) => theme.fonts.body.fontSize};
-  font-weight: ${({ theme }) => theme.fonts.body.fontWeight};
-  color: ${({ theme }) => theme.colors.black};
-  cursor: pointer;
-`;
+const SceneName = styled.h3(({ theme }) => ({
+  ...theme.fonts.body,
+  color: theme.colors.black,
+  cursor: "pointer",
+}));
 
 export default SceneCard;
