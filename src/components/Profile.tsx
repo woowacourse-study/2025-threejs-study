@@ -27,7 +27,7 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: 301px;
+  height: 300px;
   justify-content: space-between;
   text-decoration: none;
   color: inherit;
