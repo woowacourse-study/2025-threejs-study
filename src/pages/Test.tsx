@@ -8,7 +8,7 @@ const Test = () => {
       <SceneCard
         imageSrc="/scene-1.png"
         name="Scene 1"
-        sceneHref="/scenes/bass.html"
+        sceneUrl="/scenes/bass.html"
       />
     </div>
   );
