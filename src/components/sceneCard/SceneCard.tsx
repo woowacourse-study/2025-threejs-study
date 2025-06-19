@@ -1,25 +1,31 @@
-import styled from "@emotion/styled";
-import { handleImageError } from "../../util/handleImageError";
-import fallbackImage from "../../assets/fallback-image.png";
+import styled from '@emotion/styled';
+import { handleImageError } from '../../util/handleImageError';
+import fallbackImage from '../../assets/fallback-image.png';
 
 interface SceneCardProps {
   imageSrc: string;
   name: string;
+  sceneHref: string;
 }
 
-const SceneCard = ({ imageSrc, name }: SceneCardProps) => {
+const SceneCard = ({ imageSrc, name, sceneHref }: SceneCardProps) => {
   return (
     <SceneCardContainer>
-      <SceneCardImage
-        src={imageSrc}
-        onError={(e) => handleImageError(e, fallbackImage)}
-      />
-      <SceneName>{name}</SceneName>
+      <a href={sceneHref} target="_blank" rel="noopener noreferrer">
+        <SceneCardImage
+          src={imageSrc}
+          alt={`${name} 썸네일`}
+          onError={(e) => handleImageError(e, fallbackImage)}
+        />
+      </a>
+      <a href={sceneHref} target="_blank" rel="noopener noreferrer">
+        <SceneName>{name}</SceneName>
+      </a>
     </SceneCardContainer>
   );
 };
 
-const SceneCardContainer = styled.div`
+const SceneCardContainer = styled.figure`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +47,7 @@ const SceneCardImage = styled.img`
   }
 `;
 
-const SceneName = styled.h3`
+const SceneName = styled.figcaption`
   ${({ theme }) => theme.fonts.body}
   cursor: pointer;
 `;

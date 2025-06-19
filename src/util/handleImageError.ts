@@ -1,6 +1,6 @@
 export const handleImageError = (
   event: React.SyntheticEvent<HTMLImageElement>,
-  defaultImageSrc: string
+  defaultImageSrc: string,
 ) => {
   event.currentTarget.src = defaultImageSrc;
 };
