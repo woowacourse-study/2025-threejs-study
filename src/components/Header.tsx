@@ -44,9 +44,12 @@ const Navigator = styled.nav(({ theme }) => ({
   gap: '24px',
 
   a: {
+    padding: '4px',
+    borderRadius: '4px',
+
     '&:hover': {
-      transition: 'color 0.2s ease',
-      color: theme.colors.gray2,
+      transition: 'background-color 0.2s ease',
+      backgroundColor: theme.colors.gray1,
     },
   },
 }));
