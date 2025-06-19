@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 const Header = () => {
   return (
-    <StyledHeader>
+    <HeaderContainer>
       <Navigator>
         <Link to={'/'}>Gallery</Link>
         <Link to={'/'}>AboutUs</Link>
@@ -19,13 +19,13 @@ const Header = () => {
           <img src={GithubIcon} alt='깃허브 아이콘' />
         </Link>
       </ExternalLink>
-    </StyledHeader>
+    </HeaderContainer>
   );
 };
 
 export default Header;
 
-const StyledHeader = styled.header(({ theme }) => ({
+const HeaderContainer = styled.header(({ theme }) => ({
   padding: '30px 0',
 
   display: 'flex',

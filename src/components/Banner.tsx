@@ -2,15 +2,15 @@ import styled from '@emotion/styled';
 
 const Banner = () => {
   return (
-    <StyledBanner>
+    <BannerContainer>
       <SubTitle>woowahan-three-js products.</SubTitle>
-    </StyledBanner>
+    </BannerContainer>
   );
 };
 
 export default Banner;
 
-const StyledBanner = styled.section`
+const BannerContainer = styled.section`
   width: 100%;
   padding: 194px 0;
 
