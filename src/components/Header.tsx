@@ -10,7 +10,9 @@ const Header = () => {
         <Link to={'/'}>AboutUs</Link>
       </Navigator>
 
-      <Title>Five.js</Title>
+      <Logo>
+        <Link to={'/'}>Five.js</Link>
+      </Logo>
 
       <ExternalLink>
         <Link to={'/'}>
@@ -49,7 +51,7 @@ const Navigator = styled.nav(({ theme }) => ({
   },
 }));
 
-const Title = styled.h1`
+const Logo = styled.nav`
   flex: 6;
 `;
 
