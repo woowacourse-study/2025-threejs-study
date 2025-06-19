@@ -34,7 +34,6 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfileLink = styled.a`
-  display: inline-block;
   width: 250px;
   height: 250px;
   border-radius: 50%;
