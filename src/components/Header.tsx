@@ -37,7 +37,7 @@ const HeaderContainer = styled.header(({ theme }) => ({
 }));
 
 const Navigator = styled.nav(({ theme }) => ({
-  flex: 3,
+  flex: 1,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -52,9 +52,9 @@ const Navigator = styled.nav(({ theme }) => ({
 }));
 
 const Logo = styled.nav`
-  flex: 6;
+  flex: 2;
 `;
 
 const ExternalLink = styled.div`
-  flex: 3;
+  flex: 1;
 `;
