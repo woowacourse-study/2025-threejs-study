@@ -34,6 +34,11 @@ const HeaderContainer = styled.header(({ theme }) => ({
 
   textAlign: 'center',
   ...theme.fonts.subHeading,
+
+  WebkitUserSelect: 'none',
+  MozUserSelect: 'none',
+  msUserSelect: 'none',
+  userSelect: 'none',
 }));
 
 const Navigator = styled.nav(({ theme }) => ({
