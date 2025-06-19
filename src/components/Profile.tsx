@@ -8,37 +8,32 @@ type ProfileProps = {
 
 const Profile = ({ name, imgUrl, linkUrl }: ProfileProps) => {
   return (
-    <ProfileContainer>
-      <ProfileLink href={linkUrl} target="_blank" rel="noopener noreferrer">
-        <ProfileImage src={imgUrl} alt="Profile" />
-      </ProfileLink>
-      <ProfileNameContainer>
-        <ProfileName href={linkUrl} target="_blank" rel="noopener noreferrer">
-          {name}
-        </ProfileName>
-      </ProfileNameContainer>
+    <ProfileContainer href={linkUrl} target="_blank" rel="noopener noreferrer">
+      <ProfileImage src={imgUrl} alt="Profile" />
+      <ProfileName>{name}</ProfileName>
     </ProfileContainer>
   );
 };
 
 export default Profile;
 
-const ProfileContainer = styled.div`
+const ProfileContainer = styled.a`
   display: flex;
   flex-direction: column;
-  width: 250px;
-  height: 300px;
+  width: 262px;
+  height: 312px;
   justify-content: space-between;
   text-decoration: none;
   color: inherit;
-`;
-
-const ProfileLink = styled.a`
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  overflow: hidden;
+  box-sizing: border-box;
+  padding: 6px;
   cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray1};
+  }
 `;
 
 const ProfileImage = styled.img`
@@ -48,17 +43,10 @@ const ProfileImage = styled.img`
   border-radius: 50%;
 `;
 
-const ProfileNameContainer = styled.div`
-  display: inline-block;
+const ProfileName = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  ${({ theme }) => theme.fonts.subHeading};
-`;
-
-const ProfileName = styled.a`
   text-decoration: none;
   color: inherit;
-  cursor: pointer;
 `;
