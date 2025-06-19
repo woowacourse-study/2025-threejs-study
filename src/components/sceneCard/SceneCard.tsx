@@ -5,20 +5,20 @@ import fallbackImage from '../../assets/fallback-image.png';
 interface SceneCardProps {
   imageSrc: string;
   name: string;
-  sceneHref: string;
+  sceneUrl: string;
 }
 
-const SceneCard = ({ imageSrc, name, sceneHref }: SceneCardProps) => {
+const SceneCard = ({ imageSrc, name, sceneUrl }: SceneCardProps) => {
   return (
     <SceneCardContainer>
-      <a href={sceneHref} target="_blank" rel="noopener noreferrer">
+      <a href={sceneUrl} target="_blank" rel="noopener noreferrer">
         <SceneCardImage
           src={imageSrc}
           alt={`${name} 썸네일`}
           onError={(e) => handleImageError(e, fallbackImage)}
         />
       </a>
-      <a href={sceneHref} target="_blank" rel="noopener noreferrer">
+      <a href={sceneUrl} target="_blank" rel="noopener noreferrer">
         <SceneName>{name}</SceneName>
       </a>
     </SceneCardContainer>
