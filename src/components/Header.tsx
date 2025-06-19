@@ -15,9 +15,7 @@ const Header = () => {
       </Logo>
 
       <ExternalLink>
-        <Link to={'/'}>
-          <img src={GithubIcon} alt='깃허브 아이콘' />
-        </Link>
+        <img src={GithubIcon} alt='깃허브 아이콘' />
       </ExternalLink>
     </HeaderContainer>
   );
