@@ -1,4 +1,11 @@
-export const PROFILE = [
+export type Profile = {
+  id: string;
+  name: string;
+  imgUrl: string;
+  linkUrl: string;
+};
+
+export const PROFILES: Profile[] = [
   {
     id: 'hanheel',
     name: 'Blue',

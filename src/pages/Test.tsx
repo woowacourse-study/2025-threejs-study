@@ -1,11 +1,11 @@
 import Profile from '../components/Profile';
-import { PROFILE } from '../consts';
+import { PROFILES } from '../consts';
 
 const Test = () => {
   return (
     <div>
       <h1>Test Component</h1>
-      {PROFILE.map((profile) => (
+      {PROFILES.map((profile) => (
         <Profile
           key={profile.id}
           name={profile.name}
