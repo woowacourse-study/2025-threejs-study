@@ -1,3 +1,7 @@
 body {
-  font-family: 'Playfair Display', sans-serif;
+  font-family: "Playfair Display", sans-serif;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
