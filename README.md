@@ -1,5 +1,7 @@
 ## 📁 폴더 구조 예시
+
 ✅ 폴더 구조는 변경될 수 있습니다
+
 ```javascript
 src/
 ├── components/

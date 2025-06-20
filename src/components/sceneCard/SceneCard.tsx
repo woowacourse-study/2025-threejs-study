@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
-import { handleImageError } from '../../util/handleImageError';
-import fallbackImage from '../../assets/fallback-image.png';
+import styled from "@emotion/styled";
+import { handleImageError } from "../../util/handleImageError";
+import fallbackImage from "../../assets/fallback-image.png";
 
 interface SceneCardProps {
   imageSrc: string;
