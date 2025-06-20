@@ -61,7 +61,7 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: 64px;
 `;
 
 const ContentTitle = styled.h2`

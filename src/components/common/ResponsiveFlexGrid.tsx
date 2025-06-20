@@ -23,9 +23,9 @@ export default ResponsiveFlexGrid;
 
 const FlexWrapper = styled.div`
   width: 100%;
-  max-width: 1100px;
+  max-width: 1120px;
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 64px;
   justify-content: center;
 `;
