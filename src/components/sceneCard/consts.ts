@@ -1,11 +1,11 @@
-type SCENE_CARDS = {
+type SceneCards = {
   id: string;
   name: string;
   imageSrc: string;
   sceneUrl: string;
 };
 
-export const SCENE_CARDS: SCENE_CARDS[] = [
+export const SCENE_CARDS: SceneCards[] = [
   {
     id: "hanheel",
     name: "Blue",
