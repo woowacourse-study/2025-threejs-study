@@ -1,4 +1,6 @@
 import SceneCard from '../components/sceneCard/SceneCard';
+import Profile from '../components/Profile';
+import { PROFILES } from '../consts';
 
 const Test = () => {
   return (
@@ -10,6 +12,14 @@ const Test = () => {
         name="Scene 1"
         sceneUrl="/scenes/bass.html"
       />
+      {PROFILES.map((profile) => (
+        <Profile
+          key={profile.id}
+          name={profile.name}
+          imgUrl={profile.imgUrl}
+          linkUrl={profile.linkUrl}
+        />
+      ))}
     </div>
   );
 };
