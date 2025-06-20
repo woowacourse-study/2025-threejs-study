@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { SCENE_CARDS } from "../components/sceneCard/consts";
 import ResponsiveFlexGrid from "../components/common/ResponsiveFlexGrid";
 
-const Test = () => {
+const Main = () => {
   return (
     <>
       <Header />
@@ -33,7 +33,7 @@ const Test = () => {
     </>
   );
 };
-export default Test;
+export default Main;
 
 const Container = styled.div`
   width: 100%;
