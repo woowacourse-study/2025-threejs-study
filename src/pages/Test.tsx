@@ -1,8 +1,18 @@
+import Profile from '../components/Profile';
+import { PROFILES } from '../consts';
+
 const Test = () => {
   return (
     <div>
       <h1>Test Component</h1>
-      <p>This is a test component to verify the setup.</p>
+      {PROFILES.map((profile) => (
+        <Profile
+          key={profile.id}
+          name={profile.name}
+          imgUrl={profile.imgUrl}
+          linkUrl={profile.linkUrl}
+        />
+      ))}
     </div>
   );
 };
