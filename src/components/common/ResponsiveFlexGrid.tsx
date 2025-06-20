@@ -2,18 +2,18 @@ import styled from "@emotion/styled";
 import type { ComponentType } from "react";
 
 type ResponsiveFlexGridProps<T> = {
-  Component: ComponentType<T>;
+  RenderComponent: ComponentType<T>;
   mappingData: T[];
 };
 
 const ResponsiveFlexGrid = <T extends object>({
-  Component,
+  RenderComponent,
   mappingData,
 }: ResponsiveFlexGridProps<T>) => {
   return (
     <FlexWrapper>
       {mappingData.map((data, idx) => (
-        <Component key={idx} {...data} />
+        <RenderComponent key={idx} {...data} />
       ))}
     </FlexWrapper>
   );

@@ -17,13 +17,16 @@ const Test = () => {
           <ContentWrapper>
             <ContentTitle>Scenes</ContentTitle>
             <ResponsiveFlexGrid
-              Component={SceneCard}
+              RenderComponent={SceneCard}
               mappingData={SCENE_CARDS}
             />
           </ContentWrapper>
           <ContentWrapper>
             <ContentTitle>Contributors</ContentTitle>
-            <ResponsiveFlexGrid Component={Profile} mappingData={PROFILES} />
+            <ResponsiveFlexGrid
+              RenderComponent={Profile}
+              mappingData={PROFILES}
+            />
           </ContentWrapper>
         </ContentContainer>
       </Container>
