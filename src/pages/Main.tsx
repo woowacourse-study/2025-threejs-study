@@ -6,22 +6,56 @@ import Banner from '../components/Banner';
 import styled from '@emotion/styled';
 import { SCENE_CARDS } from '../components/sceneCard/consts';
 import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
+import { useRef } from 'react';
 
 const Main = () => {
+  const scenesRef = useRef<HTMLDivElement>(null);
+  const contributorsRef = useRef<HTMLDivElement>(null);
+
+  const HEADER_HEIGHT = 91;
+
+  const scrollToScenes = () => {
+    if (scenesRef.current) {
+      const elementTop = scenesRef.current.offsetTop;
+      window.scrollTo({
+        top: elementTop - HEADER_HEIGHT,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollToContributors = () => {
+    if (contributorsRef.current) {
+      const elementTop = contributorsRef.current.offsetTop;
+      window.scrollTo({
+        top: elementTop - HEADER_HEIGHT,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <>
-      <Header />
+      <Header
+        onScrollToScenes={scrollToScenes}
+        onScrollToContributors={scrollToContributors}
+        onScrollToTop={scrollToTop}
+      />
       <Container>
         <Banner />
         <ContentContainer>
-          <ContentWrapper>
+          <ContentWrapper ref={scenesRef}>
             <ContentTitle>Scenes</ContentTitle>
             <ResponsiveFlexGrid
               RenderComponent={SceneCard}
               mappingData={SCENE_CARDS}
             />
           </ContentWrapper>
-          <ContentWrapper>
+          <ContentWrapper ref={contributorsRef}>
             <ContentTitle>Contributors</ContentTitle>
             <ResponsiveFlexGrid
               RenderComponent={Profile}
