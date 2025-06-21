@@ -136,3 +136,15 @@ a:active {
   color: inherit;
   outline: none;
 }
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+}

@@ -1,20 +1,34 @@
-import { Link } from 'react-router-dom';
 import GithubIcon from '../assets/github-mark.svg';
 import styled from '@emotion/styled';
 
-const Header = () => {
+interface HeaderProps {
+  onScrollToScenes: () => void;
+  onScrollToContributors: () => void;
+  onScrollToTop: () => void;
+}
+
+const Header = ({
+  onScrollToScenes,
+  onScrollToContributors,
+  onScrollToTop,
+}: HeaderProps) => {
   return (
     <HeaderContainer>
       <Navigator>
-        <Link to={'/'}>Gallery</Link>
-        <Link to={'/'}>AboutUs</Link>
+        <NavButton onClick={onScrollToScenes}>Gallery</NavButton>
+        <NavButton onClick={onScrollToContributors}>AboutUs</NavButton>
       </Navigator>
 
       <Logo>
-        <Link to={'/'}>Five.js</Link>
+        <button type="button" onClick={onScrollToTop}>
+          Five.js
+        </button>
       </Logo>
-
-      <ExternalLink>
+      <ExternalLink
+        href="https://github.com/woowacourse-study/2025-threejs-study"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src={GithubIcon} alt="깃허브 아이콘" />
       </ExternalLink>
     </HeaderContainer>
@@ -27,7 +41,7 @@ const HeaderContainer = styled.header(({ theme }) => ({
   position: 'fixed',
   width: '100%',
 
-  padding: '30px 0',
+  padding: '30px 12px',
   zIndex: 1000,
 
   display: 'flex',
@@ -47,21 +61,21 @@ const HeaderContainer = styled.header(({ theme }) => ({
   WebkitBackdropFilter: 'blur(10px)',
 }));
 
-const Navigator = styled.nav(({ theme }) => ({
-  flex: 1,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '24px',
+const Navigator = styled.nav`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+`;
 
-  a: {
-    padding: '4px',
-    borderRadius: '4px',
+const NavButton = styled.button(({ theme }) => ({
+  padding: '4px',
+  borderRadius: '4px',
 
-    '&:hover': {
-      transition: 'background-color 0.2s ease',
-      backgroundColor: theme.colors.gray1,
-    },
+  '&:hover': {
+    transition: 'background-color 0.2s ease',
+    backgroundColor: theme.colors.gray1,
   },
 }));
 
@@ -69,6 +83,6 @@ const Logo = styled.nav`
   flex: 2;
 `;
 
-const ExternalLink = styled.div`
+const ExternalLink = styled.a`
   flex: 1;
 `;

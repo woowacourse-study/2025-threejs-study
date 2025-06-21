@@ -6,22 +6,35 @@ import Banner from '../components/Banner';
 import styled from '@emotion/styled';
 import { SCENE_CARDS } from '../components/sceneCard/consts';
 import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
+import { useSectionScroll } from '../hooks/useSectionScroll';
 
 const Main = () => {
+  const {
+    scenesRef,
+    contributorsRef,
+    scrollToScenes,
+    scrollToContributors,
+    scrollToTop,
+  } = useSectionScroll();
+
   return (
     <>
-      <Header />
+      <Header
+        onScrollToScenes={scrollToScenes}
+        onScrollToContributors={scrollToContributors}
+        onScrollToTop={scrollToTop}
+      />
       <Container>
         <Banner />
         <ContentContainer>
-          <ContentWrapper>
+          <ContentWrapper ref={scenesRef}>
             <ContentTitle>Scenes</ContentTitle>
             <ResponsiveFlexGrid
               RenderComponent={SceneCard}
               mappingData={SCENE_CARDS}
             />
           </ContentWrapper>
-          <ContentWrapper>
+          <ContentWrapper ref={contributorsRef}>
             <ContentTitle>Contributors</ContentTitle>
             <ResponsiveFlexGrid
               RenderComponent={Profile}
@@ -33,6 +46,7 @@ const Main = () => {
     </>
   );
 };
+
 export default Main;
 
 const Container = styled.div`
