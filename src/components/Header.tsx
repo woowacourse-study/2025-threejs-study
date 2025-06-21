@@ -14,7 +14,11 @@ const Header = () => {
         <Link to={'/'}>Five.js</Link>
       </Logo>
 
-      <ExternalLink>
+      <ExternalLink
+        href="https://github.com/woowacourse-study/2025-threejs-study"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src={GithubIcon} alt="깃허브 아이콘" />
       </ExternalLink>
     </HeaderContainer>
@@ -69,6 +73,6 @@ const Logo = styled.nav`
   flex: 2;
 `;
 
-const ExternalLink = styled.div`
+const ExternalLink = styled.a`
   flex: 1;
 `;
