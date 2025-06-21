@@ -6,7 +6,7 @@ import Banner from '../components/Banner';
 import styled from '@emotion/styled';
 import { SCENE_CARDS } from '../components/sceneCard/consts';
 import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
-import { useScrollNavigation } from '../hooks/useScrollNavigation';
+import { useSectionScroll } from '../hooks/useSectionScroll';
 
 const Main = () => {
   const {
@@ -15,7 +15,7 @@ const Main = () => {
     scrollToScenes,
     scrollToContributors,
     scrollToTop,
-  } = useScrollNavigation();
+  } = useSectionScroll();
 
   return (
     <>

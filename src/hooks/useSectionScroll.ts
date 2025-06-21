@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-export const useScrollNavigation = () => {
+export const useSectionScroll = () => {
   const scenesRef = useRef<HTMLDivElement>(null);
   const contributorsRef = useRef<HTMLDivElement>(null);
 
