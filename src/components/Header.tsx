@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
-import GithubIcon from "../assets/github-mark.svg";
-import styled from "@emotion/styled";
+import { Link } from 'react-router-dom';
+import GithubIcon from '../assets/github-mark.svg';
+import styled from '@emotion/styled';
 
 const Header = () => {
   return (
     <HeaderContainer>
       <Navigator>
-        <Link to={"/"}>Gallery</Link>
-        <Link to={"/"}>AboutUs</Link>
+        <Link to={'/'}>Gallery</Link>
+        <Link to={'/'}>AboutUs</Link>
       </Navigator>
 
       <Logo>
-        <Link to={"/"}>Five.js</Link>
+        <Link to={'/'}>Five.js</Link>
       </Logo>
 
       <ExternalLink>
@@ -24,42 +24,42 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.header(({ theme }) => ({
-  position: "fixed",
-  width: "100%",
+  position: 'fixed',
+  width: '100%',
 
-  padding: "30px 0",
+  padding: '30px 0',
   zIndex: 1000,
 
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-  textAlign: "center",
+  textAlign: 'center',
   ...theme.fonts.subHeading,
 
-  backgroundColor: "#ffffff80",
-  backdropFilter: "blur(10px)",
+  backgroundColor: '#ffffff80',
+  backdropFilter: 'blur(10px)',
 
-  WebkitUserSelect: "none",
-  MozUserSelect: "none",
-  msUserSelect: "none",
-  userSelect: "none",
-  WebkitBackdropFilter: "blur(10px)",
+  WebkitUserSelect: 'none',
+  MozUserSelect: 'none',
+  msUserSelect: 'none',
+  userSelect: 'none',
+  WebkitBackdropFilter: 'blur(10px)',
 }));
 
 const Navigator = styled.nav(({ theme }) => ({
   flex: 1,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "24px",
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '24px',
 
   a: {
-    padding: "4px",
-    borderRadius: "4px",
+    padding: '4px',
+    borderRadius: '4px',
 
-    "&:hover": {
-      transition: "background-color 0.2s ease",
+    '&:hover': {
+      transition: 'background-color 0.2s ease',
       backgroundColor: theme.colors.gray1,
     },
   },

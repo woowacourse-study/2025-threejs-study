@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import type { ComponentType } from "react";
+import styled from '@emotion/styled';
+import type { ComponentType } from 'react';
 
 type ResponsiveFlexGridProps<T> = {
   RenderComponent: ComponentType<T>;

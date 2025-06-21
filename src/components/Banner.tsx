@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 const Banner = () => {
   return (
@@ -20,9 +20,9 @@ const BannerContainer = styled.section`
 `;
 
 const SubTitle = styled.h2(({ theme }) => ({
-  width: "332px",
+  width: '332px',
 
-  textAlign: "center",
-  whiteSpace: "wrap",
+  textAlign: 'center',
+  whiteSpace: 'wrap',
   ...theme.fonts.header,
 }));
