@@ -6,9 +6,9 @@ export const useScrollNavigation = () => {
 
   const HEADER_HEIGHT = 91;
 
-  const scrollToScenes = () => {
-    if (scenesRef.current) {
-      const elementTop = scenesRef.current.offsetTop;
+  const scrollToElement = (ref: React.RefObject<HTMLDivElement | null>) => {
+    if (ref.current) {
+      const elementTop = ref.current.offsetTop;
       window.scrollTo({
         top: elementTop - HEADER_HEIGHT,
         behavior: 'smooth',
@@ -16,15 +16,8 @@ export const useScrollNavigation = () => {
     }
   };
 
-  const scrollToContributors = () => {
-    if (contributorsRef.current) {
-      const elementTop = contributorsRef.current.offsetTop;
-      window.scrollTo({
-        top: elementTop - HEADER_HEIGHT,
-        behavior: 'smooth',
-      });
-    }
-  };
+  const scrollToScenes = () => scrollToElement(scenesRef);
+  const scrollToContributors = () => scrollToElement(contributorsRef);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
