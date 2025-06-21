@@ -41,7 +41,7 @@ const HeaderContainer = styled.header(({ theme }) => ({
   position: 'fixed',
   width: '100%',
 
-  padding: '30px 0',
+  padding: '30px 12px',
   zIndex: 1000,
 
   display: 'flex',
