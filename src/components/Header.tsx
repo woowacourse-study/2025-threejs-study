@@ -15,7 +15,7 @@ const Header = () => {
       </Logo>
 
       <ExternalLink>
-        <img src={GithubIcon} alt='깃허브 아이콘' />
+        <img src={GithubIcon} alt="깃허브 아이콘" />
       </ExternalLink>
     </HeaderContainer>
   );
@@ -24,7 +24,11 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.header(({ theme }) => ({
+  position: 'fixed',
+  width: '100%',
+
   padding: '30px 0',
+  zIndex: 1000,
 
   display: 'flex',
   justifyContent: 'center',
@@ -33,10 +37,14 @@ const HeaderContainer = styled.header(({ theme }) => ({
   textAlign: 'center',
   ...theme.fonts.subHeading,
 
+  backgroundColor: '#ffffff80',
+  backdropFilter: 'blur(10px)',
+
   WebkitUserSelect: 'none',
   MozUserSelect: 'none',
   msUserSelect: 'none',
   userSelect: 'none',
+  WebkitBackdropFilter: 'blur(10px)',
 }));
 
 const Navigator = styled.nav(({ theme }) => ({
