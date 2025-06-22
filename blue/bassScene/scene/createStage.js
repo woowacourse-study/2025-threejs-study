@@ -15,7 +15,7 @@ export const createStage = () => {
 
 	const backgroundGeometry = new THREE.PlaneGeometry(150, 150, 150);
 	const backgroundTexture = new THREE.TextureLoader().load(
-		"../texture/background-texture.png",
+		"./texture/background-texture.png",
 	);
 	const backgroundMaterial = new THREE.MeshBasicMaterial({
 		map: backgroundTexture,

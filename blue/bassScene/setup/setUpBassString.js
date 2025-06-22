@@ -29,7 +29,7 @@ export const setUpBassStringInteraction = (
 			const listener = new THREE.AudioListener();
 			camera.add(listener);
 			const randomRoute = getRandomElement(SOUND_FILE_ARRAY);
-			const soundRoute = `/sounds/${randomRoute}.mp3`;
+			const soundRoute = `./sounds/${randomRoute}.mp3`;
 			const sound = await loadSound(soundRoute, listener);
 			sound.play();
 
