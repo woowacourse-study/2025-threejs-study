@@ -35,34 +35,34 @@ const basePositions = new Map();
 let stringMeshes = [];
 
 function loadBassModel() {
-	loadGLBModel("/models/bass-pickup.glb", (m) => {
+	loadGLBModel("./models/bass-pickup.glb", (m) => {
 		m.position.set(2, 2, 4);
 		m.scale.set(10, 10, 10);
 		m.rotation.set(radians2, radians2, radians);
 		bassGroup.add(m);
 	});
 
-	loadGLBModel("/models/bass-pickup.glb", (m) => {
+	loadGLBModel("./models/bass-pickup.glb", (m) => {
 		m.position.set(4, -5, 5);
 		m.scale.set(10, 10, 10);
 		m.rotation.set(radians2, radians2, radians);
 		bassGroup.add(m);
 	});
 
-	loadGLBModel("/models/bass-bridge.glb", (m) => {
+	loadGLBModel("./models/bass-bridge.glb", (m) => {
 		m.position.set(6, -12, 6);
 		m.scale.set(7, 7, 7);
 		m.rotation.set(radians2, 0, radians3);
 		bassGroup.add(m);
 	});
 
-	loadGLBModel("/models/bass-body.glb", (m) => {
+	loadGLBModel("./models/bass-body.glb", (m) => {
 		m.position.set(0, 0, 5);
 		m.scale.set(40, 40, 40);
 		bassGroup.add(m);
 	});
 
-	loadGLBModel("/models/bass-neck.glb", (m) => {
+	loadGLBModel("./models/bass-neck.glb", (m) => {
 		m.position.set(-9, 25, 0);
 		m.scale.set(60, 60, 60);
 		m.rotation.set(radians4, 0, radians4);
