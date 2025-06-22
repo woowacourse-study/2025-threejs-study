@@ -5,7 +5,7 @@ export const createStage = () => {
 
 	const stageGeometry = new THREE.BoxGeometry(100, 10, 150);
 	const stageTexture = new THREE.TextureLoader().load(
-		"../texture/stage-texture.jpg",
+		"./texture/stage-texture.jpg",
 	);
 	const stageMaterial = new THREE.MeshBasicMaterial({ map: stageTexture });
 
