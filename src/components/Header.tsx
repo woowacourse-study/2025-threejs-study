@@ -7,6 +7,8 @@ interface HeaderProps {
   onScrollToTop: () => void;
 }
 
+export const HEADER_HEIGHT = 92;
+
 const Header = ({
   onScrollToScenes,
   onScrollToContributors,
@@ -40,8 +42,9 @@ export default Header;
 const HeaderContainer = styled.header(({ theme }) => ({
   position: 'fixed',
   width: '100%',
+  height: `${HEADER_HEIGHT}px`,
 
-  padding: '30px 12px',
+  padding: '0 12px',
   zIndex: 1000,
 
   display: 'flex',

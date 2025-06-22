@@ -1,10 +1,9 @@
-import { useRef } from "react";
+import { useRef } from 'react';
+import { HEADER_HEIGHT } from '../components/Header';
 
 export const useScrollToSection = () => {
   const scenesRef = useRef<HTMLDivElement>(null);
   const contributorsRef = useRef<HTMLDivElement>(null);
-
-  const HEADER_HEIGHT = 91;
 
   const scrollToElement = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
@@ -12,7 +11,7 @@ export const useScrollToSection = () => {
       const elementTop = rect.top + window.scrollY;
       window.scrollTo({
         top: elementTop - HEADER_HEIGHT,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -21,7 +20,7 @@ export const useScrollToSection = () => {
   const scrollToContributors = () => scrollToElement(contributorsRef);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return {
