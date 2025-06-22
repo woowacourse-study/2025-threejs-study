@@ -22,17 +22,18 @@ const Header = ({
       </Navigator>
 
       <Logo>
-        <button type="button" onClick={onScrollToTop}>
-          Five.js
-        </button>
+        <LogoButton onClick={onScrollToTop}>Five.js</LogoButton>
       </Logo>
-      <ExternalLink
-        href="https://github.com/woowacourse-study/2025-threejs-study"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={GithubIcon} alt="깃허브 아이콘" />
-      </ExternalLink>
+
+      <ExternalLinkContainer>
+        <ExternalLink
+          href="https://github.com/woowacourse-study/2025-threejs-study"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={GithubIcon} alt="깃허브 아이콘" />
+        </ExternalLink>
+      </ExternalLinkContainer>
     </HeaderContainer>
   );
 };
@@ -86,6 +87,28 @@ const Logo = styled.nav`
   flex: 2;
 `;
 
-const ExternalLink = styled.a`
+const LogoButton = styled.button(({ theme }) => ({
+  padding: '4px',
+  borderRadius: '4px',
+
+  '&:hover': {
+    transition: 'background-color 0.2s ease',
+    backgroundColor: theme.colors.gray1,
+  },
+}));
+
+const ExternalLinkContainer = styled.div`
   flex: 1;
 `;
+
+const ExternalLink = styled.a(({ theme }) => ({
+  padding: '4px',
+  borderRadius: '4px',
+  display: 'inline-flex',
+  alignItems: 'center',
+
+  '&:hover': {
+    transition: 'background-color 0.2s ease',
+    backgroundColor: theme.colors.gray1,
+  },
+}));
