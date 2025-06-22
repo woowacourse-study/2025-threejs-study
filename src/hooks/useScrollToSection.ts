@@ -8,7 +8,8 @@ export const useScrollToSection = () => {
 
   const scrollToElement = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
-      const elementTop = ref.current.offsetTop;
+      const rect = ref.current.getBoundingClientRect();
+      const elementTop = rect.top + window.scrollY;
       window.scrollTo({
         top: elementTop - HEADER_HEIGHT,
         behavior: "smooth",
