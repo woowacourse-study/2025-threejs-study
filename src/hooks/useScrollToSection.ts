@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 
-export const useSectionScroll = () => {
+export const useScrollToSection = () => {
   const scenesRef = useRef<HTMLDivElement>(null);
   const contributorsRef = useRef<HTMLDivElement>(null);
 
@@ -11,7 +11,7 @@ export const useSectionScroll = () => {
       const elementTop = ref.current.offsetTop;
       window.scrollTo({
         top: elementTop - HEADER_HEIGHT,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
@@ -20,7 +20,7 @@ export const useSectionScroll = () => {
   const scrollToContributors = () => scrollToElement(contributorsRef);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return {
