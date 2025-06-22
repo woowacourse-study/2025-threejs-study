@@ -1,5 +1,5 @@
-import GithubIcon from '../assets/github-mark.svg';
 import styled from '@emotion/styled';
+import GithubIcon from '../assets/github-mark.svg';
 
 interface HeaderProps {
   onScrollToScenes: () => void;

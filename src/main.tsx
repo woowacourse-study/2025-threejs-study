@@ -1,6 +1,6 @@
+import { ThemeProvider } from '@emotion/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider } from '@emotion/react';
 import App from './App';
 import { theme } from './theme';
 import './reset.css';
