@@ -8,6 +8,7 @@ import { createTorus } from './components/Torus.js';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 import { loadCardModel } from './components/Card.js';
 import createMiniTorus from './components/effect/MiniTorus.js';
+import createShrinkingCircle from './components/ShrinkingCircle.js';
 
 //씬,카메라, 렌더러 생성
 const scene = new THREE.Scene();
@@ -21,7 +22,10 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(0, 0, 5);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.getElementById('three-canvas'),
+  antialias: true,
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -223,3 +227,14 @@ function animate() {
 }
 
 animate();
+
+const container = document.getElementById('dom-ui');
+
+setInterval(() => {
+  createShrinkingCircle({
+    container,
+    onHit: (result) => {
+      console.log('판정:', result);
+    },
+  });
+}, 1000);

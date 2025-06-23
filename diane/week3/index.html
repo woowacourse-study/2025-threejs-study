@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,14 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Three.js가 붙을 곳 -->
+      <canvas id="three-canvas" style="position: absolute; top: 0; left: 0;"></canvas>
+      
+      <!-- DOM 요소가 들어올 곳 -->
+      <div id="dom-ui" style="position: absolute; top: 0; left: 0; pointer-events: none;"></div>
+    </div>
+    <link rel="stylesheet" href="/src/components/shrinkingCircle.css"></link>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
