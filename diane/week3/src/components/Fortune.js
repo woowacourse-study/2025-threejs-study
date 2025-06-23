@@ -48,8 +48,9 @@ export function createFortuneComponent(container, onclose) {
   fortuneContainer.className = 'fortune-container';
   container.appendChild(fortuneContainer);
   fortuneContainer.addEventListener('click', () => {
-    onclose();
     container.removeChild(fortuneContainer);
+    domUI.style.pointerEvents = 'none';
+    onclose();
   });
 
   const wrapper = document.createElement('div');
@@ -81,6 +82,7 @@ export function createFortuneComponent(container, onclose) {
     e.stopPropagation();
 
     container.removeChild(fortuneContainer);
+    domUI.style.pointerEvents = 'none';
     onclose();
   });
 

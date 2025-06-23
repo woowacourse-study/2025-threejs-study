@@ -4,10 +4,11 @@ import createCenterPointSphere from './components/CenterPointSphere.js';
 import { createTorus } from './components/Torus.js';
 import { loadCardModel } from './components/Card.js';
 import createMiniTorus from './components/effect/MiniTorus.js';
+import './index.css';
 
 import { init } from './init.js';
 import { createFortuneComponent } from './components/Fortune.js';
-import { hash } from 'three/src/nodes/TSL.js';
+
 const { camera, composer, controls, renderer, scene } = init();
 
 /*---- 도형형  ----*/
@@ -61,8 +62,8 @@ for (let i = 0; i < cardCount; i++) {
 
 /*---- 이벤트 설정 ------ */
 let rotationSpeed = 0.01;
-const speedIncrement = 0.03;
-const maxSpeed = 0.4; // 최고 속도 제한
+const speedIncrement = 0.02;
+const maxSpeed = 0.3; // 최고 속도 제한
 
 let isFadeIn = false; // 페이드 인 상태
 let isFadeOut = false; // 페이드 아웃 상태
@@ -73,11 +74,10 @@ let fadeOutStartTime = null; // ⬅ 페이드 아웃 타이밍 추적용
 let hasShownFortune = false;
 
 window.addEventListener('mousedown', () => {
-  console.log(rotationSpeed, '회전 속도 증가');
+  if (hasShownFortune) return;
 
   // 운세 컴포넌트 생성 조건
   if (rotationSpeed >= maxSpeed && !hasShownFortune) {
-    console.log('운세 컴포넌트 생성');
     hasShownFortune = true;
 
     const container = document.getElementById('dom-ui');
@@ -161,7 +161,6 @@ function animate() {
         isFadeOut = false;
         scene.remove(miniTorus);
         miniTorus = null;
-        console.log('🌀 미니 토러스 제거');
       }
     }
 
