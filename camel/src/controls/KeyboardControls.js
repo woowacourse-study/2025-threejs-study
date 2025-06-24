@@ -20,9 +20,11 @@ export const createKeyboardControls = (camera, controls) => {
         // 전진/후진
         if (keyState["KeyW"]) {
             camera.position.addScaledVector(direction, moveSpeed);
+            controls.target.addScaledVector(direction, moveSpeed);
         }
         if (keyState["KeyS"]) {
             camera.position.addScaledVector(direction, -moveSpeed);
+            controls.target.addScaledVector(direction, -moveSpeed);
         }
 
         // 좌우 이동
