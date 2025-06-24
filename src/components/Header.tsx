@@ -22,7 +22,9 @@ const Header = ({
       </Navigator>
 
       <Logo>
-        <LogoButton onClick={onScrollToTop}>Five.js</LogoButton>
+        <button type="button" onClick={onScrollToTop}>
+          Five.js
+        </button>
       </Logo>
 
       <ExternalLinkContainer>
@@ -86,16 +88,6 @@ const NavButton = styled.button(({ theme }) => ({
 const Logo = styled.nav`
   flex: 2;
 `;
-
-const LogoButton = styled.button(({ theme }) => ({
-  padding: '4px',
-  borderRadius: '4px',
-
-  '&:hover': {
-    transition: 'background-color 0.2s ease',
-    backgroundColor: theme.colors.gray1,
-  },
-}));
 
 const ExternalLinkContainer = styled.div`
   flex: 1;
