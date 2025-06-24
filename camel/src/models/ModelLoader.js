@@ -1,7 +1,7 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 export const createModelLoader = (scene) => {
-	const models = {};
+	const models = [];
 
 	const loadModel = async (
 		url,
@@ -23,7 +23,7 @@ export const createModelLoader = (scene) => {
 			model.rotation.set(rotation.x, rotation.y, rotation.z);
 
 			scene.add(model);
-			models[name] = model;
+			models.push(model);
 			return model;
 		} catch (error) {
 			console.error(`모델 로딩 실패 (${name}):`, error);
@@ -32,21 +32,9 @@ export const createModelLoader = (scene) => {
 	};
 
 	const update = () => {
-		if (models.camel) {
-			models.camel.rotation.y += 0.01;
-			models.camel.rotation.x += 0.01;
-		}
-
-		if (models.drMartin) {
-			models.drMartin.rotation.y -= 0.001;
-			models.drMartin.rotation.x += 0.001;
-			models.drMartin.rotation.z -= 0.001;
-		}
-
-		if (models.hwama) {
-			models.hwama.rotation.y += 0.005;
-			models.hwama.rotation.x -= 0.005;
-			models.hwama.rotation.z += 0.005;
+		for (const model of models) {
+			model.rotation.y += 0.005;
+			model.rotation.x += 0.005;
 		}
 	};
 

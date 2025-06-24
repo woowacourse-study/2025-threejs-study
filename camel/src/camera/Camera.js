@@ -17,18 +17,22 @@ export const createCamera = (renderer) => {
 	return {
 		camera,
 		controls,
-		update: () => controls.update(),
+		update: () => {
+			// 항상 camera가 바라보는 방향으로 controls.target을 맞춤 (1인칭 효과)
+			const direction = new THREE.Vector3();
+			camera.getWorldDirection(direction);
+			controls.target.copy(camera.position).add(direction);
+			controls.update();
+		},
 	};
 };
 
 const setupControls = (controls) => {
 	controls.enableDamping = true;
 	controls.dampingFactor = 0.05;
-	controls.enablePan = true;
-	controls.enableZoom = true;
+	controls.enablePan = false;
+	controls.enableZoom = false;
 	controls.enableRotate = true;
 	controls.rotateSpeed = 0.5;
-	// controls.minDistance = 1;
-	// controls.maxDistance = 100;
 	controls.maxPolarAngle = Math.PI;
 };

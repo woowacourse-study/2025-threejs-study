@@ -81,10 +81,30 @@ const loadModels = async (loadModel) => {
 			{ x: 20, y: -14, z: 6 },
 			{ x: -0.5, y: -2.5, z: 0 },
 		);
+
+		await loadModel(
+			"/assets/bose-ultra.glb",
+			"boseUltra",
+			{ x: 10, y: -10, z: -6 },
+			{ x: -0.5, y: -2.5, z: 0 },
+		);
+
+		await loadModel(
+			"/assets/deadpool.glb",
+			"deadpool",
+			{ x: -10, y: 10, z: 4 },
+			{ x: -0.5, y: -2.5, z: 0 },
+		);
+
+		await loadModel(
+			"/assets/pasta.glb",
+			"pasta",
+			{ x: 25, y: -5, z: 2 },
+			{ x: -0.5, y: -2.5, z: 0 },
+		);
 	} catch (error) {
 		console.error("모델 로딩 실패:", error);
 	}
 };
 
-// 앱 시작
 init();
