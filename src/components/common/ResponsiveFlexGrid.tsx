@@ -13,6 +13,7 @@ const ResponsiveFlexGrid = <T extends object>({
   return (
     <FlexWrapper>
       {mappingData.map((data, idx) => (
+        //biome-ignore lint/suspicious/noArrayIndexKey: Using index as key is acceptable here since the data is static and does not change.
         <RenderComponent key={idx} {...data} />
       ))}
     </FlexWrapper>
