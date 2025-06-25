@@ -55,7 +55,7 @@ export class LoadingScreen {
     this.progressText = document.createElement('div');
     this.progressText.textContent = '0%';
     this.progressText.style.cssText = `
-      font-size: 14px;
+      font-size: 20px;
       opacity: 0.8;
     `;
 
@@ -71,7 +71,7 @@ export class LoadingScreen {
     const percentage = Math.round((loadedItems / totalItems) * 100);
 
     this.progressBar.style.width = `${percentage}%`;
-    this.progressText.textContent = `${percentage}% (${loadedItems}/${totalItems})`;
+    this.progressText.textContent = `${percentage}%`;
 
     if (loadedItems === totalItems) {
       this.loadingText.textContent = '로딩 완료! 시작 중...';
