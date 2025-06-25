@@ -1,8 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTES } from '../constants/routes';
 import Main from '../pages/Main';
-import ScenePage from '../pages/ScenePage';
-import { SCENE_URLS } from './routerConstants';
+import BassScene from '../pages/scenes/BassScene';
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +10,6 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.SCENES.BASS,
-    element: <ScenePage sceneUrl={SCENE_URLS.blue} />,
+    element: <BassScene />,
   },
 ]);
