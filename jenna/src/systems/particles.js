@@ -63,10 +63,15 @@ export function createParticleSystem(circleTexture) {
 
   const particleMaterial = new THREE.PointsMaterial({
     size: 0.15,
+    size: 0.3,
     vertexColors: true,
     transparent: true,
+    opacity: 1.0,
     alphaTest: 0.5,
+    alphaTest: 0.1,
     blending: THREE.AdditiveBlending,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
     sizeAttenuation: true,
     map: circleTexture,
   });
