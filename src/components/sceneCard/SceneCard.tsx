@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import fallbackImage from '../../assets/fallback-image.png';
 import { handleImageError } from '../../util/handleImageError';
 
@@ -11,16 +12,16 @@ interface SceneCardProps {
 const SceneCard = ({ imageSrc, name, sceneUrl }: SceneCardProps) => {
   return (
     <SceneCardContainer>
-      <a href={sceneUrl} target="_blank" rel="noopener noreferrer">
+      <Link to={sceneUrl} rel="noopener noreferrer">
         <SceneCardImage
           src={imageSrc}
           alt={`${name} 썸네일`}
           onError={(e) => handleImageError(e, fallbackImage)}
         />
-      </a>
-      <a href={sceneUrl} target="_blank" rel="noopener noreferrer">
+      </Link>
+      <Link to={sceneUrl} rel="noopener noreferrer">
         <SceneName>{name}</SceneName>
-      </a>
+      </Link>
     </SceneCardContainer>
   );
 };
