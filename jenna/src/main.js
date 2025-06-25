@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-
 import { RADIUS, SPIN_SPEED, SPIN_DURATION } from './common/constants.js';
 import { createCircleTexture } from './common/utils.js';
 import {
@@ -18,6 +16,7 @@ import {
 } from './systems/floatingScreens.js';
 import { TextureManager } from './core/textureLoader.js';
 import { LoadingScreen } from './loading/loadingScreen.js';
+import { createControls } from './systems/controls.js';
 
 let scene, camera, renderer, composer, controls;
 let sceneContainer;
@@ -48,11 +47,10 @@ function initScene() {
   camera.position.z = RADIUS * 3;
 
   renderer = createRenderer();
-  document.body.appendChild(renderer.domElement);
+  sceneContainer.appendChild(renderer.domElement);
 
   composer = createComposer(renderer, scene, camera);
-
-  controls = new OrbitControls(camera, renderer.domElement);
+  controls = createControls(camera, renderer.domElement);
 
   setupLights(scene);
 
