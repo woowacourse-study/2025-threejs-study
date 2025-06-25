@@ -6,26 +6,35 @@ export function createScreensSphere(textures) {
   const SCREEN_WIDTH = 5;
   const SCREEN_HEIGHT = 3;
 
-  const rows = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT) + 2;
-  const unitΘ = Math.PI / rows;
+  const rowCount = Math.ceil((Math.PI * RADIUS) / SCREEN_HEIGHT) + 2;
+  const thetaStep = Math.PI / rowCount;
 
-  for (let i = 1; i < rows - 1; i++) {
-    const θ0 = i * unitΘ;
-    const θLen = unitΘ;
-    const lat = Math.sin(θ0 + θLen / 2) * RADIUS;
-    const cols = Math.ceil((2 * Math.PI * lat) / SCREEN_WIDTH);
+  for (let rowIndex = 1; rowIndex < rowCount - 1; rowIndex++) {
+    const startTheta = rowIndex * thetaStep;
+    const thetaLength = thetaStep;
 
-    if (cols < 1) continue;
+    const latitudeRadius = Math.sin(startTheta + thetaLength / 2) * RADIUS;
+    const colCount = Math.ceil((2 * Math.PI * latitudeRadius) / SCREEN_WIDTH);
+    if (colCount < 1) continue;
 
-    const φLen = (2 * Math.PI) / cols;
+    const phiLength = (2 * Math.PI) / colCount;
 
-    for (let j = 0; j < cols; j++) {
-      const φ0 = j * φLen;
-      const tex = textures[(i * cols + j) % textures.length];
+    for (let colIndex = 0; colIndex < colCount; colIndex++) {
+      const startPhi = colIndex * phiLength;
+      const texture =
+        textures[(rowIndex * colCount + colIndex) % textures.length];
 
-      const geo = new THREE.SphereGeometry(RADIUS, 1, 1, φ0, φLen, θ0, θLen);
-      const mat = new THREE.MeshStandardMaterial({
-        map: tex,
+      const geometry = new THREE.SphereGeometry(
+        RADIUS,
+        1,
+        1,
+        startPhi,
+        phiLength,
+        startTheta,
+        thetaLength
+      );
+      const material = new THREE.MeshStandardMaterial({
+        map: texture,
         side: THREE.DoubleSide,
         emissive: '#000000',
         emissiveIntensity: 0,
@@ -33,7 +42,7 @@ export function createScreensSphere(textures) {
         metalness: 0.05,
       });
 
-      screensGroup.add(new THREE.Mesh(geo, mat));
+      screensGroup.add(new THREE.Mesh(geometry, material));
     }
   }
 

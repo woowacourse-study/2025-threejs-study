@@ -8,46 +8,49 @@ import {
 } from '../common/constants.js';
 import { easeOutQuad } from '../common/utils.js';
 
-export function createSpawnData(textures, spinStartTime) {
-  return textures.map((tex, i) => {
-    const φ = Math.random() * Math.PI * 2;
-    const cosθ = 2 * Math.random() - 1;
-    const θ = Math.acos(cosθ);
+export function createSpawnItems(textures, spinStartTimestamp) {
+  return textures.map((texture, index) => {
+    const azimuth = Math.random() * Math.PI * 2; // φ
+    const randomCosine = 2 * Math.random() - 1; // cosθ
+    const polarAngle = Math.acos(randomCosine); // θ
 
-    const dir = new THREE.Vector3(
-      Math.sin(θ) * Math.cos(φ),
-      Math.cos(θ),
-      Math.sin(θ) * Math.sin(φ)
+    const direction = new THREE.Vector3(
+      Math.sin(polarAngle) * Math.cos(azimuth),
+      Math.cos(polarAngle),
+      Math.sin(polarAngle) * Math.sin(azimuth)
     );
 
-    const targetPos = dir.multiplyScalar(RADIUS + MARGIN);
-    const delay = (i / textures.length) * SPIN_DURATION;
+    const targetPosition = direction.multiplyScalar(RADIUS + MARGIN);
+    const spawnDelay = (index / textures.length) * SPIN_DURATION;
 
     return {
-      tex,
-      targetPos,
-      spawnTime: spinStartTime + delay,
-      mesh: null,
-      startTime: null,
+      texture,
+      targetPosition,
+      spawnTimestamp: spinStartTimestamp + spawnDelay,
+      screenMesh: null,
+      activationTimestamp: null,
     };
   });
 }
 
-export function processSpawnData(
-  spawnData,
-  currentTime,
-  clickPoint,
-  floatingGroup
+export function processSpawnItems(
+  spawnItems,
+  currentTimestamp,
+  clickPosition,
+  floatingScreensGroup
 ) {
-  spawnData.forEach((data) => {
-    if (currentTime >= data.spawnTime && !data.mesh) {
-      const img = data.tex.image;
-      const aspect = img.width && img.height ? img.width / img.height : 1;
+  spawnItems.forEach((item) => {
+    if (currentTimestamp >= item.spawnTimestamp && !item.screenMesh) {
+      const image = item.texture.image;
+      const aspect =
+        image.width && image.height ? image.width / image.height : 1;
 
-      const geo = new THREE.PlaneGeometry(aspect * PLANE_HEIGHT, PLANE_HEIGHT);
-
-      const mat = new THREE.MeshStandardMaterial({
-        map: data.tex,
+      const geometry = new THREE.PlaneGeometry(
+        aspect * PLANE_HEIGHT,
+        PLANE_HEIGHT
+      );
+      const material = new THREE.MeshStandardMaterial({
+        map: item.texture,
         side: THREE.DoubleSide,
         roughness: 0.3,
         metalness: 0.05,
@@ -55,44 +58,45 @@ export function processSpawnData(
         emissiveIntensity: 0,
       });
 
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.copy(clickPoint);
-      floatingGroup.add(mesh);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.copy(clickPosition);
+      floatingScreensGroup.add(mesh);
 
-      data.mesh = mesh;
-      data.startTime = currentTime;
+      item.screenMesh = mesh;
+      item.activationTimestamp = currentTimestamp;
     }
   });
 }
 
 export function updateFloatingScreens(
-  spawnData,
-  currentTime,
-  clickPoint,
+  spawnItems,
+  currentTimestamp,
+  clickPosition,
   camera
 ) {
-  spawnData.forEach((data) => {
-    if (data.mesh && data.startTime !== null) {
-      const t = (currentTime - data.startTime) / SPAWN_DURATION;
-      const progress = Math.min(Math.max(t, 0), 1);
-      const ease = easeOutQuad(progress);
+  spawnItems.forEach((item) => {
+    const { screenMesh, activationTimestamp, targetPosition } = item;
+    if (screenMesh && activationTimestamp !== null) {
+      const t = (currentTimestamp - activationTimestamp) / SPAWN_DURATION;
+      const clamped = Math.min(Math.max(t, 0), 1);
+      const eased = easeOutQuad(clamped);
 
-      data.mesh.position.lerpVectors(clickPoint, data.targetPos, ease);
-      data.mesh.lookAt(camera.position);
+      screenMesh.position.lerpVectors(clickPosition, targetPosition, eased);
+      screenMesh.lookAt(camera.position);
 
-      if (progress >= 1) {
-        data.startTime = null;
+      if (clamped >= 1) {
+        item.activationTimestamp = null;
       }
     }
   });
 }
 
-export function cleanupFloatingGroup(floatingGroup, scene) {
-  if (floatingGroup) {
-    scene.remove(floatingGroup);
-    floatingGroup.children.forEach((mesh) => {
-      mesh.geometry.dispose();
-      mesh.material.dispose();
-    });
-  }
+export function cleanupFloatingScreens(floatingScreensGroup, scene) {
+  if (!floatingScreensGroup) return;
+
+  scene.remove(floatingScreensGroup);
+  floatingScreensGroup.children.forEach((mesh) => {
+    mesh.geometry.dispose();
+    mesh.material.dispose();
+  });
 }

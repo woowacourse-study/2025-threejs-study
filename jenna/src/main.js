@@ -13,7 +13,7 @@ import { createParticleSystem, updateParticles } from './systems/particles.js';
 import { GameState } from './systems/gameState.js';
 import { setupClickHandler } from './systems/interaction.js';
 import {
-  processSpawnData,
+  processSpawnItems,
   updateFloatingScreens,
 } from './systems/floatingScreens.js';
 import { TextureManager } from './core/textureLoader.js';
@@ -88,7 +88,7 @@ function animate(time = 0) {
     updateParticles(particleSystem, dt);
     gameState.updateSpinState(now, SPIN_DURATION);
 
-    processSpawnData(
+    processSpawnItems(
       gameState.spawnData,
       now,
       gameState.clickPoint,

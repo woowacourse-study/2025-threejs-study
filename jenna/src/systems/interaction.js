@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { PARTICLE_LIFE } from '../common/constants.js';
 import { resetParticles } from './particles.js';
-import { createSpawnData, cleanupFloatingGroup } from './floatingScreens.js';
+import { createSpawnItems, cleanupFloatingScreens } from './floatingScreens.js';
 
 export function setupClickHandler(
   camera,
@@ -33,12 +33,12 @@ export function setupClickHandler(
     particleSystem.visible = true;
     resetParticles(particleSystem);
 
-    cleanupFloatingGroup(gameState.floatingGroup, scene);
+    cleanupFloatingScreens(gameState.floatingGroup, scene);
 
     gameState.floatingGroup = new THREE.Group();
     scene.add(gameState.floatingGroup);
 
-    gameState.spawnData = createSpawnData(textures, gameState.spinStartTime);
+    gameState.spawnData = createSpawnItems(textures, gameState.spinStartTime);
 
     setTimeout(() => {
       particleSystem.visible = false;
