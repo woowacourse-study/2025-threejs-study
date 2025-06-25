@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { RADIUS } from './constants.js';
+import { RADIUS } from '../common/constants.js';
 
 export function createScreensSphere(textures) {
   const screensGroup = new THREE.Group();

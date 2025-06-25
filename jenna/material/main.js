@@ -1,16 +1,23 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-import { RADIUS, SPIN_SPEED, SPIN_DURATION } from './constants.js';
-import { createCircleTexture } from './utils.js';
-import { createRenderer, createComposer, setupLights } from './renderer.js';
-import { createScreensSphere } from './screens.js';
-import { createParticleSystem, updateParticles } from './particles.js';
-import { GameState } from './gameState.js';
-import { setupClickHandler } from './interaction.js';
-import { processSpawnData, updateFloatingScreens } from './floatingScreens.js';
-import { TextureManager } from './textureLoader.js';
-import { LoadingScreen } from './loadingScreen.js';
+import { RADIUS, SPIN_SPEED, SPIN_DURATION } from './common/constants.js';
+import { createCircleTexture } from './common/utils.js';
+import {
+  createRenderer,
+  createComposer,
+  setupLights,
+} from './core/renderer.js';
+import { createScreensSphere } from './core/screens.js';
+import { createParticleSystem, updateParticles } from './systems/particles.js';
+import { GameState } from './systems/gameState.js';
+import { setupClickHandler } from './systems/interaction.js';
+import {
+  processSpawnData,
+  updateFloatingScreens,
+} from './systems/floatingScreens.js';
+import { TextureManager } from './core/textureLoader.js';
+import { LoadingScreen } from './loading/loadingScreen.js';
 
 let scene, camera, renderer, composer, controls;
 let sceneContainer;

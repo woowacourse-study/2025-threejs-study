@@ -5,8 +5,8 @@ import {
   PLANE_HEIGHT,
   SPIN_DURATION,
   SPAWN_DURATION,
-} from './constants.js';
-import { easeOutQuad } from './utils.js';
+} from '../common/constants.js';
+import { easeOutQuad } from '../common/utils.js';
 
 export function createSpawnData(textures, spinStartTime) {
   return textures.map((tex, i) => {

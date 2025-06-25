@@ -4,8 +4,8 @@ import {
   PARTICLE_SPEED,
   PARTICLE_LIFE,
   RADIUS,
-} from './constants.js';
-import { getRandomSpherePoint } from './utils.js';
+} from '../common/constants.js';
+import { getRandomSpherePoint } from '../common/utils.js';
 
 export function createParticleSystem(circleTexture) {
   const particleGeometry = new THREE.BufferGeometry();

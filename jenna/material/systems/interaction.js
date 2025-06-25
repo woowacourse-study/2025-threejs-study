@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { PARTICLE_LIFE } from './constants.js';
+import { PARTICLE_LIFE } from '../common/constants.js';
 import { resetParticles } from './particles.js';
 import { createSpawnData, cleanupFloatingGroup } from './floatingScreens.js';
 
