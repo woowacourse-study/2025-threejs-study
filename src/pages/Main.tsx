@@ -1,27 +1,40 @@
-import SceneCard from '../components/sceneCard/SceneCard';
+import styled from '@emotion/styled';
+import Banner from '../components/Banner';
+import Header from '../components/Header';
+import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
 import Profile from '../components/profile/Profile';
 import { PROFILES } from '../components/profile/consts';
-import Header from '../components/Header';
-import Banner from '../components/Banner';
-import styled from '@emotion/styled';
+import SceneCard from '../components/sceneCard/SceneCard';
 import { SCENE_CARDS } from '../components/sceneCard/consts';
-import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
+import { useScrollToSection } from '../hooks/useScrollToSection';
 
 const Main = () => {
+  const {
+    scenesRef,
+    contributorsRef,
+    scrollToScenes,
+    scrollToContributors,
+    scrollToTop,
+  } = useScrollToSection();
+
   return (
     <>
-      <Header />
+      <Header
+        onScrollToScenes={scrollToScenes}
+        onScrollToContributors={scrollToContributors}
+        onScrollToTop={scrollToTop}
+      />
       <Container>
         <Banner />
         <ContentContainer>
-          <ContentWrapper>
+          <ContentWrapper ref={scenesRef}>
             <ContentTitle>Scenes</ContentTitle>
             <ResponsiveFlexGrid
               RenderComponent={SceneCard}
               mappingData={SCENE_CARDS}
             />
           </ContentWrapper>
-          <ContentWrapper>
+          <ContentWrapper ref={contributorsRef}>
             <ContentTitle>Contributors</ContentTitle>
             <ResponsiveFlexGrid
               RenderComponent={Profile}
@@ -33,6 +46,7 @@ const Main = () => {
     </>
   );
 };
+
 export default Main;
 
 const Container = styled.div`
