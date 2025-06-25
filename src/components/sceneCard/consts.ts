@@ -1,3 +1,5 @@
+import { ROUTES } from '../../constants/routes';
+
 type SceneCards = {
   id: string;
   name: string;
@@ -8,9 +10,9 @@ type SceneCards = {
 export const SCENE_CARDS: SceneCards[] = [
   {
     id: 'hanheel',
-    name: 'Blue',
-    imageSrc: 'https://avatars.githubusercontent.com/u/168459001?v=4',
-    sceneUrl: 'https://github.com/hanheel/',
+    name: 'bass',
+    imageSrc: '/thumbnail/bass.png',
+    sceneUrl: ROUTES.SCENES.BASS,
   },
   {
     id: 'sanghee01',
