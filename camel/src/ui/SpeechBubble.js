@@ -1,8 +1,7 @@
 import { createElement } from "../utils/document";
 
 const SPEECHES = {
-  camel:
-    "안녕하세요! 저는 카멜행성이에요! 이 곳을 돌아다니며 제 최애들을 모아주세요✨",
+  camel: "저의 최애 공간에 오신 걸 환영합니다✨",
   drMartin: "안녕! 나는 닥터마틴이야. 카멜의 최애 신발이야 🥾",
   hwama: "뿌직...",
   boseUltra: "나는 카멜의 최애 헤드폰...자꾸 머리 안 감고 써...",
@@ -11,7 +10,7 @@ const SPEECHES = {
 };
 
 const CHARACTER_NAMES = {
-  camel: "카멜",
+  camel: "카멜행성이",
   drMartin: "닥터마틴",
   hwama: "화마",
   boseUltra: "헤드폰",
