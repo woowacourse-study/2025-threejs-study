@@ -1,0 +1,25 @@
+.object-count-ui {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  z-index: 2;
+  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+.object-count-label {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+.object-count-number {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  letter-spacing: 1px;
+}

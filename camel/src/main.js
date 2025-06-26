@@ -6,8 +6,7 @@ import { setupLights } from "./lights/Lights";
 import { createModelLoader } from "./models/ModelLoader";
 import { createScene } from "./scene/Scene";
 import { createSpeechBubble } from "./ui/SpeechBubble";
-
-import { createElement } from "./utils/document";
+import { createObjectCountUI } from "./ui/objectCount/objectCount";
 
 const SUPPORTED_CHARACTERS = [
   "camel",
@@ -39,12 +38,19 @@ const init = () => {
   const { loadModel, update: updateModels } = createModelLoader(scene);
   const { update: updateKeyboard } = createKeyboardControls(camera, controls);
   const { showSpeech } = createSpeechBubble();
+  const objectCountUI = createObjectCountUI();
 
   const cleanupRaycaster = createRaycasterControls(
     scene,
     camera,
     (objectName) => {
       if (SUPPORTED_CHARACTERS.includes(objectName)) {
+        if (!window.__interactedSet) window.__interactedSet = new Set();
+        const interactedSet = window.__interactedSet;
+        if (!interactedSet.has(objectName)) {
+          interactedSet.add(objectName);
+          objectCountUI.setCount(interactedSet.size, 6);
+        }
         const audio = CHARACTER_AUDIO[objectName];
         if (audio) {
           audio.currentTime = 0;

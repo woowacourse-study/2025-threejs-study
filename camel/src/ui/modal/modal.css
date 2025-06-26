@@ -178,12 +178,12 @@ body {
   height: 40px;
   position: fixed;
   top: 32px;
-  right: 32px;
+  left: 32px;
   zindex: 1;
   border: none;
   cursor: pointer;
   background: none;
-  opacity: 0.4;
+  opacity: 0.5;
   &:hover {
     opacity: 1;
   }
