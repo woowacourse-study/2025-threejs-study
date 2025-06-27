@@ -23,7 +23,7 @@ export const SCENE_CARDS: SceneCards[] = [
   {
     id: 'dev-dino22',
     name: 'camel space',
-    imageSrc: 'https://avatars.githubusercontent.com/u/141295691?v=4',
+    imageSrc: '/thumbnail/camel.png',
     sceneUrl: ROUTES.SCENES.CAMEL_SPACE,
   },
   {
