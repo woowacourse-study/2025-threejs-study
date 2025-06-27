@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import Banner from '../components/Banner';
-import Header from '../components/Header';
 import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
-import Profile from '../components/profile/Profile';
+import Header from '../components/Header';
 import { PROFILES } from '../components/profile/consts';
-import SceneCard from '../components/sceneCard/SceneCard';
+import Profile from '../components/profile/Profile';
 import { SCENE_CARDS } from '../components/sceneCard/consts';
+import SceneCard from '../components/sceneCard/SceneCard';
 import { useScrollToSection } from '../hooks/useScrollToSection';
 
 const Main = () => {

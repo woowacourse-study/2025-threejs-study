@@ -3,6 +3,7 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
+    "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   }
 }
