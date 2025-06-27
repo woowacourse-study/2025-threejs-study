@@ -22,9 +22,9 @@ export const SCENE_CARDS: SceneCards[] = [
   },
   {
     id: 'dev-dino22',
-    name: 'Camel',
+    name: 'camel space',
     imageSrc: 'https://avatars.githubusercontent.com/u/141295691?v=4',
-    sceneUrl: 'https://github.com/dev-dino22/',
+    sceneUrl: ROUTES.SCENES.CAMEL_SPACE,
   },
   {
     id: 'Daeun-100',
