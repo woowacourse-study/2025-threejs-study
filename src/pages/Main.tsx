@@ -4,9 +4,9 @@ import ResponsiveFlexGrid from '../components/common/ResponsiveFlexGrid';
 import Header from '../components/Header';
 import { PROFILES } from '../components/profile/consts';
 import Profile from '../components/profile/Profile';
-import { SCENE_CARDS } from '../components/sceneCard/consts';
 import SceneCard from '../components/sceneCard/SceneCard';
 import { useScrollToSection } from '../hooks/useScrollToSection';
+import { SCENE_CARDS } from './consts';
 
 const Main = () => {
   const {
