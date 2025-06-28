@@ -54,8 +54,6 @@ function initScene() {
 
   setupLights(scene);
 
-  scene.add(new THREE.AxesHelper(2 * RADIUS));
-
   screensGroup = createScreensSphere(textures);
   scene.add(screensGroup);
 
