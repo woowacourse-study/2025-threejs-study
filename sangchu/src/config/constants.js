@@ -1,26 +1,39 @@
-export const COLORS = {
-  background: "#87CEEB",
-  rimLight: "#ffffff",
-  bottomLight: "#5183FF",
-  keyLight: "#FFE062",
-  plane: "#84673b",
-};
-
-export const CAMERA_CONFIG = {
-  fov: 75,
-  near: 0.1,
-  far: 1000,
-  position: { x: 0, y: 0, z: 2.5 },
-};
-
-export const CONTROLS_CONFIG = {
-  enableDamping: true,
-  dampingFactor: 0.25,
-  minDistance: 1,
-  maxDistance: 10,
-};
-
-export const ANIMATION_CONFIG = {
-  slowSpeed: 0.3,
-  fastSpeed: 3,
+export const CONFIG = {
+  camera: {
+    fov: 75,
+    near: 0.1,
+    far: 1000,
+    position: { x: 0, y: 3, z: 3.5 },
+  },
+  colors: {
+    background: "#87CEEB",
+    plane: "#84673b",
+    rimLight: "#ffffff",
+    bottomLight: "#5183FF",
+    keyLight: "#FFE062",
+  },
+  animation: {
+    slowSpeed: 0.3,
+    fastSpeed: 1.5,
+    hoverHeight: 0.5,
+    hoverAmplitude: 0.1,
+    hoverFrequency: 2,
+    breathAmplitude: 0.1,
+    breathFrequency: 3,
+    tiltAmplitude: 0.1,
+    tiltFrequencyZ: 1.2,
+    tiltFrequencyX: 0.8,
+    baseRotationX: -0.5,
+    boostScale: 1.2,
+  },
+  controls: {
+    enableDamping: true,
+    dampingFactor: 0.25,
+    minDistance: 1,
+    maxDistance: 10,
+    moveSpeed: 0.1,
+    rotationSpeed: 0.2,
+    distanceThreshold: 0.02,
+    boostDuration: 1000,
+  },
 };
