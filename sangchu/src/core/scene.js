@@ -1,19 +1,19 @@
 import * as THREE from "three";
-import { COLORS, CAMERA_CONFIG } from "../config/constants.js";
+import { CONFIG } from "../config/constants.js";
 
 export const scene = new THREE.Scene();
-scene.background = new THREE.Color(COLORS.background);
+scene.background = new THREE.Color(CONFIG.colors.background);
 
 export const camera = new THREE.PerspectiveCamera(
-  CAMERA_CONFIG.fov,
+  CONFIG.camera.fov,
   window.innerWidth / window.innerHeight,
-  CAMERA_CONFIG.near,
-  CAMERA_CONFIG.far
+  CONFIG.camera.near,
+  CONFIG.camera.far
 );
 camera.position.set(
-  CAMERA_CONFIG.position.x,
-  CAMERA_CONFIG.position.y,
-  CAMERA_CONFIG.position.z
+  CONFIG.camera.position.x,
+  CONFIG.camera.position.y,
+  CONFIG.camera.position.z
 );
 
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -22,8 +22,10 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-window.addEventListener("resize", () => {
+export function handleResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
+}
+
+window.addEventListener("resize", handleResize);
