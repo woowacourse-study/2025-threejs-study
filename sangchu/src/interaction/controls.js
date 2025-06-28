@@ -15,6 +15,16 @@ let clickPlane = null;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
+function playSpinSound() {
+  try {
+    const audio = new Audio("./assets/audio/spinning.mp3");
+    audio.volume = 0.5;
+    audio.play().catch((e) => console.log("소리 재생 안됨:", e.message));
+  } catch (e) {
+    console.log("소리 로딩 안됨:", e.message);
+  }
+}
+
 export const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = CONFIG.controls.enableDamping;
 controls.dampingFactor = CONFIG.controls.dampingFactor;
@@ -62,6 +72,7 @@ function onMouseClick(event) {
   const model = getModel();
   if (model) {
     showSpeechBubble(model.position);
+    playSpinSound();
   }
 
   rotationSpeed = CONFIG.animation.fastSpeed;
