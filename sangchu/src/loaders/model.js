@@ -1,14 +1,14 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { scene } from "../core/scene.js";
-import { LoadingUI } from "../ui/loading.js";
+import { enableShadowsForModel } from "../rendering/shadows.js";
+import { hideLoading, showLoading, updateProgress } from "../ui/loading.js";
 
 export let model = null;
-let loadingUI = null;
 
-export const loadModel = () => {
+export async function loadModel() {
+  showLoading();
+
   const loader = new GLTFLoader();
-
-  loadingUI = new LoadingUI();
 
   return new Promise((resolve, reject) => {
     loader.load(
@@ -18,28 +18,28 @@ export const loadModel = () => {
         model.scale.set(1, 1, 1);
         model.position.set(0, 0, 0);
         model.rotation.set(-0.5, -2.5, 0);
+
+        enableShadowsForModel(model);
+
         scene.add(model);
 
-        loadingUI.updateProgress(100);
-        setTimeout(() => {
-          loadingUI.hide();
-        }, 1000);
-
+        updateProgress(100);
+        setTimeout(() => hideLoading(), 500);
         resolve(model);
       },
       (progress) => {
-        if (progress.total > 0) {
-          const percent = (progress.loaded / progress.total) * 100;
-          loadingUI.updateProgress(percent);
-        }
+        const percent = (progress.loaded / progress.total) * 100;
+        updateProgress(percent);
       },
       (error) => {
-        loadingUI.hide();
-        console.error("상추신이 나타나지 못했어요:", error);
+        console.error("모델 로딩 실패:", error);
+        hideLoading();
         reject(error);
       }
     );
   });
-};
+}
 
-export const getModel = () => model;
+export function getModel() {
+  return model;
+}

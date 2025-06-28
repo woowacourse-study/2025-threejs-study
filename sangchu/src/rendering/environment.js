@@ -1,20 +1,20 @@
 import * as THREE from "three";
-import { COLORS } from "../config/constants.js";
+import { CONFIG } from "../config/constants.js";
 import { scene } from "../core/scene.js";
 
-export const setupEnvironment = () => {
-  const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(10, 10),
+export function setupEnvironment() {
+  const groundPlane = new THREE.Mesh(
+    new THREE.PlaneGeometry(15, 15),
     new THREE.MeshStandardMaterial({
-      color: COLORS.plane,
+      color: CONFIG.colors.plane,
       roughness: 0.8,
       metalness: 0.2,
     })
   );
-  plane.position.set(0, -1, 0);
-  plane.rotation.x = -Math.PI / 2;
-  plane.receiveShadow = true;
-  scene.add(plane);
+  groundPlane.rotation.x = -Math.PI / 2;
+  groundPlane.position.y = -1;
+  groundPlane.receiveShadow = true;
+  scene.add(groundPlane);
 
-  return { plane };
-};
+  return { clickPlane: groundPlane };
+}
