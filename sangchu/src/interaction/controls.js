@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { CONFIG } from "../config/constants.js";
 import { camera, renderer } from "../core/scene.js";
 import { getModel } from "../loaders/model.js";
+import { showSpeechBubble } from "../ui/speech-bubble.js";
 
 export let rotationSpeed = CONFIG.animation.slowSpeed;
 export let isSpeedBoosted = false;
@@ -57,6 +58,11 @@ function onMouseClick(event) {
   event.stopPropagation();
 
   if (isSpeedBoosted) return;
+
+  const model = getModel();
+  if (model) {
+    showSpeechBubble(model.position);
+  }
 
   rotationSpeed = CONFIG.animation.fastSpeed;
   isSpeedBoosted = true;
