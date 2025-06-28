@@ -12,7 +12,7 @@ export const loadModel = () => {
 
   return new Promise((resolve, reject) => {
     loader.load(
-      "/assets/sangchu-god.glb",
+      "./assets/sangchu-god.glb",
       (gltf) => {
         model = gltf.scene;
         model.scale.set(1, 1, 1);
