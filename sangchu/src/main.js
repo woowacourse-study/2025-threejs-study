@@ -3,6 +3,7 @@ import { setClickPlane, setupControls } from "./interaction/controls.js";
 import { loadModel } from "./loaders/model.js";
 import { setupEnvironment } from "./rendering/environment.js";
 import { setupLights } from "./rendering/lights.js";
+import { createInfoUI } from "./ui/info.js";
 
 async function init() {
   try {
@@ -13,6 +14,8 @@ async function init() {
 
     await loadModel();
     animate();
+
+    createInfoUI();
   } catch (error) {
     console.error("초기화 중 오류 발생:", error);
   }
