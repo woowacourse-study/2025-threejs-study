@@ -1,28 +1,42 @@
 import * as THREE from "three";
-import { scene, camera, renderer } from "../core/scene.js";
-import { controls, getRotationSpeed } from "./controls.js";
+import { CONFIG } from "../config/constants.js";
+import { camera, renderer, scene } from "../core/scene.js";
 import { getModel } from "../loaders/model.js";
+import { controls, updateMouseInteraction } from "./controls.js";
 
 const clock = new THREE.Clock();
 
-export const animate = () => {
+export function animate() {
   requestAnimationFrame(animate);
 
   const model = getModel();
   if (model) {
     const time = clock.getElapsedTime();
-    const rotationSpeed = getRotationSpeed();
 
-    model.rotation.y = time * rotationSpeed;
-    model.position.y = Math.sin(time * 2) * 0.3;
-    model.position.x = Math.cos(time * 1.5) * 0.2;
+    updateMouseInteraction();
 
-    const breathScale = 1 + Math.sin(time * 3) * 0.1;
+    const currentY = model.position.y;
+    const targetHover =
+      CONFIG.animation.hoverHeight +
+      Math.sin(time * CONFIG.animation.hoverFrequency) *
+        CONFIG.animation.hoverAmplitude;
+    model.position.y = currentY * 0.9 + targetHover * 0.1;
+
+    const breathScale =
+      1 +
+      Math.sin(time * CONFIG.animation.breathFrequency) *
+        CONFIG.animation.breathAmplitude;
     model.scale.set(breathScale, breathScale, breathScale);
-    model.rotation.z = Math.sin(time * 1.2) * 0.1;
-    model.rotation.x = -0.5 + Math.cos(time * 0.8) * 0.1;
+
+    model.rotation.z =
+      Math.sin(time * CONFIG.animation.tiltFrequencyZ) *
+      CONFIG.animation.tiltAmplitude;
+    model.rotation.x =
+      CONFIG.animation.baseRotationX +
+      Math.cos(time * CONFIG.animation.tiltFrequencyX) *
+        CONFIG.animation.tiltAmplitude;
   }
 
   controls.update();
   renderer.render(scene, camera);
-};
+}

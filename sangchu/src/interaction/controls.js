@@ -1,31 +1,95 @@
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { CONTROLS_CONFIG, ANIMATION_CONFIG } from "../config/constants.js";
+import { CONFIG } from "../config/constants.js";
 import { camera, renderer } from "../core/scene.js";
+import { getModel } from "../loaders/model.js";
 
-export let rotationSpeed = ANIMATION_CONFIG.slowSpeed;
+export let rotationSpeed = CONFIG.animation.slowSpeed;
+export let isSpeedBoosted = false;
 let speedBoostTimer = null;
+const targetPosition = new THREE.Vector3();
+let targetRotationY = 0;
+let clickPlane = null;
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
 export const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = CONTROLS_CONFIG.enableDamping;
-controls.dampingFactor = CONTROLS_CONFIG.dampingFactor;
-controls.minDistance = CONTROLS_CONFIG.minDistance;
-controls.maxDistance = CONTROLS_CONFIG.maxDistance;
+controls.enableDamping = CONFIG.controls.enableDamping;
+controls.dampingFactor = CONFIG.controls.dampingFactor;
+controls.minDistance = CONFIG.controls.minDistance;
+controls.maxDistance = CONFIG.controls.maxDistance;
+controls.enablePan = false;
 
-window.addEventListener("click", () => {
-  if (rotationSpeed === ANIMATION_CONFIG.fastSpeed) {
-    return;
+export function setClickPlane(plane) {
+  clickPlane = plane;
+}
+
+function onMouseMove(event) {
+  if (!clickPlane) return;
+
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(clickPlane);
+
+  if (intersects.length > 0) {
+    const mousePosition = intersects[0].point;
+    const model = getModel();
+
+    if (model) {
+      targetPosition.copy(mousePosition);
+      targetPosition.y = CONFIG.animation.hoverHeight;
+
+      if (!isSpeedBoosted) {
+        const direction = mousePosition.clone().sub(model.position);
+        direction.y = 0;
+        direction.normalize();
+        targetRotationY = Math.atan2(direction.x, direction.z);
+      }
+    }
   }
+}
 
-  rotationSpeed = ANIMATION_CONFIG.fastSpeed;
+function onMouseClick(event) {
+  event.preventDefault();
+  event.stopPropagation();
 
-  if (speedBoostTimer) {
-    clearTimeout(speedBoostTimer);
-  }
+  if (isSpeedBoosted) return;
+
+  rotationSpeed = CONFIG.animation.fastSpeed;
+  isSpeedBoosted = true;
+
+  if (speedBoostTimer) clearTimeout(speedBoostTimer);
 
   speedBoostTimer = setTimeout(() => {
-    rotationSpeed = ANIMATION_CONFIG.slowSpeed;
+    rotationSpeed = CONFIG.animation.slowSpeed;
+    isSpeedBoosted = false;
     speedBoostTimer = null;
-  }, 3000);
-});
+  }, CONFIG.controls.boostDuration);
+}
 
-export const getRotationSpeed = () => rotationSpeed;
+export function updateMouseInteraction() {
+  const model = getModel();
+  if (!model) return;
+
+  const distance = model.position.distanceTo(targetPosition);
+  if (distance > CONFIG.controls.distanceThreshold) {
+    model.position.lerp(targetPosition, CONFIG.controls.moveSpeed);
+  }
+
+  if (isSpeedBoosted) {
+    model.rotation.y += rotationSpeed * 0.1;
+  } else {
+    let angleDiff = targetRotationY - model.rotation.y;
+    while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+    while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+    model.rotation.y += angleDiff * CONFIG.controls.rotationSpeed;
+  }
+}
+
+export function setupControls() {
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("click", onMouseClick, true);
+}
