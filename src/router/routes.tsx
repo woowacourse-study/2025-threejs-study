@@ -4,6 +4,7 @@ import Main from '../pages/Main';
 import BassScene from '../pages/scenes/BassScene';
 import CamelSpaceScene from '../pages/scenes/CamelSpaceScene';
 import CardOrbitScene from '../pages/scenes/CardOrbitScene';
+import SangchuScene from '../pages/scenes/SangchuScene';
 
 export const router = createBrowserRouter([
   {
@@ -21,5 +22,9 @@ export const router = createBrowserRouter([
   {
     path: ROUTES.SCENES.CAMEL_SPACE,
     element: <CamelSpaceScene />,
+  },
+  {
+    path: ROUTES.SCENES.SANGCHU,
+    element: <SangchuScene />,
   },
 ]);

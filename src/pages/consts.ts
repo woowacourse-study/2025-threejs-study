@@ -16,9 +16,9 @@ export const SCENE_CARDS: SceneCards[] = [
   },
   {
     id: 'sanghee01',
-    name: 'Sangchu',
-    imageSrc: 'https://avatars.githubusercontent.com/u/80993302?v=4',
-    sceneUrl: 'https://github.com/sanghee01/',
+    name: 'sangchu',
+    imageSrc: '/thumbnail/sangchu.png',
+    sceneUrl: ROUTES.SCENES.SANGCHU,
   },
   {
     id: 'dev-dino22',
