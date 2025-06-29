@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "hash": "c3185fe5",
   "configHash": "4fbcef87",
   "lockfileHash": "8bddb928",
@@ -52,4 +53,12 @@
       "file": "chunk-5WQJO2FO.js"
     }
   }
+=======
+  "hash": "744b713c",
+  "configHash": "88c4c26b",
+  "lockfileHash": "8bddb928",
+  "browserHash": "33fabf69",
+  "optimized": {},
+  "chunks": {}
+>>>>>>> develop
 }

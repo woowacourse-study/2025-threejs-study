@@ -5,7 +5,7 @@ import { SCENE_URLS } from './const';
 const BassScene = () => {
   return (
     <BassSceneContainer>
-      <ScenePage sceneUrl={SCENE_URLS.blue} />
+      <ScenePage sceneUrl={SCENE_URLS.bass} />
       <GuideMessage>Click the bass !</GuideMessage>
     </BassSceneContainer>
   );
