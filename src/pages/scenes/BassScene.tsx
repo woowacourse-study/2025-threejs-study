@@ -5,7 +5,7 @@ import { SCENE_TITLES, SCENE_URLS } from './const';
 const BassScene = () => {
   return (
     <BassSceneContainer>
-      <ScenePage sceneUrl={SCENE_URLS.bass} />
+      <ScenePage sceneUrl={SCENE_URLS.bass} title={SCENE_TITLES.bass} />
       <GuideMessage>Click the bass !</GuideMessage>
     </BassSceneContainer>
   );

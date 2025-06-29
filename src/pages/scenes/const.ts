@@ -5,4 +5,9 @@ export const SCENE_URLS = {
   sangchu: '/scenes/sangchu/index.html',
 };
 
-export const SCENE_TITLES = { blue: 'bass scene' };
+export const SCENE_TITLES = {
+  bass: 'bass scene',
+  sangchu: 'sangchu scene',
+  camelSpace: 'camel space scene',
+  cardOrbit: 'card orbit scene',
+};
