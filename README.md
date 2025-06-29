@@ -14,11 +14,12 @@
 | 제작자 | 씬 | 인터렉션 |
 |:--:|:--:|:-----|
 | **블루**<br>[@hanheel](https://github.com/hanheel) | <img src="https://github.com/user-attachments/assets/e4d4ab75-44d5-4d3b-ab5f-a67ad7ea8945" width="300"/> <br> 🎵 **Bass** | 줄 클릭 시 진동 + 사운드 + 음표 표출 |
-| **상추**<br>[@sanghee01](https://github.com/sanghee01) | <img src="https://github.com/user-attachments/assets/d35f7a48-877a-465b-8987-a08e0ae46d05" width="300"/> <br> 🛰 **Sangchu** | 클릭 시 회전 애니메이션 + 사운드 + 말풍선 |
+| **상추**<br>[@sanghee01](https://github.com/sanghee01) | <img src="https://github.com/user-attachments/assets/01d39f58-7111-4b02-98a6-5240856a4551" width="300"/> <br> 🛰 **Sangchu** | 마우스를 따라 오브젝트 이동 및 <br/> 클릭 시 회전 애니메이션 + 사운드 + 말풍선 |
 | **다이앤**<br>[@Daeun-100](https://github.com/Daeun-100) | <img src="https://github.com/user-attachments/assets/13cc5e79-305d-48b1-9419-d3c7d8cf29da" width="300"/> <br> 🪐 **Card Orbit** | 클릭 시 회전 및 빛 방출 |
 | **카멜**<br>[@dev-dino22](https://github.com/dev-dino22) | <img src="https://github.com/user-attachments/assets/41932716-6b18-4533-9452-2d78cb27ac9b" width="300"/> <br> 🐫 **Camel Space** | 내부 오브젝트 접근 및 말풍선 생성 |
 | **제나**<br>[@JeLee-river](https://github.com/JeLee-river) | <img src="https://github.com/user-attachments/assets/4cf99da7-3ea7-45b0-8044-3576861a0eaf" width="300"/> <br> 🌌 **Screens** | 클릭 시 장면 이미지들이 스크린 주변에 생성 |
 
+![화면 기록 2025-06-29 13 40 35 (1)]()
 
 
 ## 📁 폴더 구조
