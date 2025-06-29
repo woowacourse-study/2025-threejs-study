@@ -45,7 +45,6 @@ src/
 
 ```bash
 git clone https://github.com/your-org/five-js.git
-cd five-js
 npm install
 npm run dev
 ```
