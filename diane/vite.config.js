@@ -1,1 +1,6 @@
-export default { root: '.', build: { outDir: 'dist' }, base: './' };
+export default {
+  root: '.',
+  build: { outDir: 'dist' },
+  base: './',
+  assetsInclude: ['**/*.glb'],
+};
