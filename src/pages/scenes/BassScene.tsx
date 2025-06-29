@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import ScenePage from '../common/ScenePage';
-import { SCENE_URLS } from './const';
+import { SCENE_TITLES, SCENE_URLS } from './const';
 
 const BassScene = () => {
   return (

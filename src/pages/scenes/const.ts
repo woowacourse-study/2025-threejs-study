@@ -4,3 +4,5 @@ export const SCENE_URLS = {
   cardOrbit: '/scenes/cardOrbit/index.html',
   sangchu: '/scenes/sangchu/index.html',
 };
+
+export const SCENE_TITLES = { blue: 'bass scene' };
