@@ -31,6 +31,7 @@ const ScenePageContainer = styled.div`
    width: 100vw;
    height: 100vh;
    border: none;
+   overflow: hidden;
 `;
 
 const SceneFrame = styled.iframe`
