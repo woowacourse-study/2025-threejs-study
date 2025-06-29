@@ -1,0 +1,10 @@
+.click-text {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: #fffffffd;
+
+  z-index: 20000;
+}

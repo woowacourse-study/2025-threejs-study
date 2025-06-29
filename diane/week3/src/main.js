@@ -8,6 +8,7 @@ import './index.css';
 
 import { init } from './init.js';
 import { createFortuneComponent } from './components/Fortune.js';
+import Click from './components/Click.js';
 
 const { camera, composer, controls, renderer, scene } = init();
 
@@ -175,3 +176,4 @@ function animate() {
 }
 
 animate();
+Click();
