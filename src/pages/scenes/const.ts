@@ -3,6 +3,7 @@ export const SCENE_URLS = {
   camelSpace: '/scenes/camelSpace/index.html',
   cardOrbit: '/scenes/cardOrbit/index.html',
   sangchu: '/scenes/sangchu/index.html',
+  screens: '/scenes/screens/index.html',
 };
 
 export const SCENE_TITLES = {
@@ -10,4 +11,5 @@ export const SCENE_TITLES = {
   sangchu: 'sangchu scene',
   camelSpace: 'camel space scene',
   cardOrbit: 'card orbit scene',
+  screens: 'screens scene',
 };
