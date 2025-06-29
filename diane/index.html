@@ -2,22 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>card orbit</title>
   </head>
   <body>
     <div id="app">
       <!-- Three.js가 붙을 곳 -->
-      <canvas id="three-canvas" style="position: absolute; top: 0; left: 0;"></canvas>
-      
+      <canvas
+        id="three-canvas"
+        style="position: absolute; top: 0; left: 0"
+      ></canvas>
+
       <!-- DOM 요소가 들어올 곳 -->
-      <div id="dom-ui" ></div>
+      <div id="dom-ui"></div>
     </div>
-    <link rel="stylesheet" href="/src/components/shrinkingCircle.css"></link>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
