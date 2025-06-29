@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import ScenePage from '../common/ScenePage';
-import { SCENE_URLS } from './const';
+import { SCENE_TITLES, SCENE_URLS } from './const';
 
 const ScreensScene = () => {
   return (
     <ScreensSceneContainer>
-      <ScenePage sceneUrl={SCENE_URLS.jenna} />
+      <ScenePage sceneUrl={SCENE_URLS.screens} title={SCENE_TITLES.screens} />
     </ScreensSceneContainer>
   );
 };
