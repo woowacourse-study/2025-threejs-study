@@ -40,7 +40,7 @@ src/
 ## ⚙️ 설치 및 실행
 
 ```bash
-git clone https://github.com/your-org/five-js.git
+git clone https://github.com/woowacourse-study/2025-threejs-study.git
 npm install
 npm run dev
 ```
