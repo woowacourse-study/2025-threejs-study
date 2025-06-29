@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
 import ScenePage from '../common/ScenePage';
-import { SCENE_URLS } from './const';
+import { SCENE_TITLES, SCENE_URLS } from './const';
 
 const CamelSpaceScene = () => {
   return (
     <CamelSpaceSceneContainer>
-      <ScenePage sceneUrl={SCENE_URLS.camelSpace} />
+      <ScenePage
+        sceneUrl={SCENE_URLS.camelSpace}
+        title={SCENE_TITLES.camelSpace}
+      />
     </CamelSpaceSceneContainer>
   );
 };
