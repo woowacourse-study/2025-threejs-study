@@ -17,7 +17,7 @@
 | **상추**<br>[@sanghee01](https://github.com/sanghee01) | <img src="https://github.com/user-attachments/assets/d35f7a48-877a-465b-8987-a08e0ae46d05" width="300"/> <br> 🛰 **Sangchu** | 클릭 시 회전 애니메이션 + 사운드 + 말풍선 |
 | **다이앤**<br>[@Daeun-100](https://github.com/Daeun-100) | <img src="https://github.com/user-attachments/assets/13cc5e79-305d-48b1-9419-d3c7d8cf29da" width="300"/> <br> 🪐 **Card Orbit** | 클릭 시 회전 및 빛 방출 |
 | **카멜**<br>[@dev-dino22](https://github.com/dev-dino22) | <img src="https://github.com/user-attachments/assets/41932716-6b18-4533-9452-2d78cb27ac9b" width="300"/> <br> 🐫 **Camel Space** | 내부 오브젝트 접근 및 말풍선 생성 |
-| **제나**<br>[@JeLee-river](https://github.com/JeLee-river) | <img src="./public/gifs/card-orbit.gif" width="300"/> <br> 🌌 **[씬 이름 미정]** | 설명: [추가 필요] |
+| **제나**<br>[@JeLee-river](https://github.com/JeLee-river) | <img src="https://github.com/user-attachments/assets/4cf99da7-3ea7-45b0-8044-3576861a0eaf" width="300"/> <br> 🌌 **Screens** | 클릭 시 장면 이미지들이 스크린 주변에 생성 |
 
 
 
