@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import ScenePage from '../common/ScenePage';
-import { SCENE_URLS } from './const';
+import { SCENE_TITLES, SCENE_URLS } from './const';
 
 const SangchuScene = () => {
   return (
     <SanchuSceneContainer>
-      <ScenePage sceneUrl={SCENE_URLS.sangchu} />
+      <ScenePage sceneUrl={SCENE_URLS.sangchu} title={SCENE_TITLES.sangchu} />
     </SanchuSceneContainer>
   );
 };
