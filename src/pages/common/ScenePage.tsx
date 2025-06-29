@@ -5,10 +5,11 @@ import { ROUTES } from '../../constants/routes';
 
 interface ScenePageProps {
   sceneUrl: string;
+  title: string;
   children?: React.ReactNode;
 }
 
-const ScenePage = ({ sceneUrl, children }: ScenePageProps) => {
+const ScenePage = ({ sceneUrl, title, children }: ScenePageProps) => {
   const navigate = useNavigate();
   const handleExit = () => {
     navigate(ROUTES.HOME);
@@ -16,7 +17,7 @@ const ScenePage = ({ sceneUrl, children }: ScenePageProps) => {
 
   return (
     <ScenePageContainer>
-      <SceneFrame src={sceneUrl} title="bass scene" />
+      <SceneFrame src={sceneUrl} title={title} />
       <ExitButton onClick={handleExit} aria-label="뒤로가기">
         <Icon src={GoBackIcon} alt="뒤로가기 아이콘" />
         Exit
@@ -30,6 +31,7 @@ const ScenePageContainer = styled.div`
    width: 100vw;
    height: 100vh;
    border: none;
+   overflow: hidden;
 `;
 
 const SceneFrame = styled.iframe`
