@@ -3,7 +3,7 @@
 
 <br />
 
-## 🚀 Live Demo
+## 🚀 Try it out
 
 [https://five-js.vercel.app](실제배포링크로변경예정)
 
