@@ -34,8 +34,8 @@ export const SCENE_CARDS: SceneCards[] = [
   },
   {
     id: 'JeLee-river',
-    name: 'Jenna',
-    imageSrc: 'https://avatars.githubusercontent.com/u/106021313?v=4',
-    sceneUrl: 'https://github.com/JeLee-river/',
+    name: 'screens',
+    imageSrc: '/thumbnail/screens.png',
+    sceneUrl: ROUTES.SCENES.SCREENS,
   },
 ];
