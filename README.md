@@ -3,8 +3,8 @@
 
 
 ## 🚀 Try it out
+🔗 [배포링크](https://2025-threejs-study-git-main-hanheels-projects.vercel.app/)
 
-[2025-threejs-study.vercel.app](2025-threejs-study.vercel.app)
 
 
 
