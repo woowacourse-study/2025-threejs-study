@@ -4,7 +4,7 @@
 
 ## 🚀 Try it out
 
-[https://five-js.vercel.app](실제배포링크로변경예정)
+[2025-threejs-study.vercel.app](2025-threejs-study.vercel.app)
 
 
 
