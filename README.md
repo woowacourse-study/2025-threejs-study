@@ -1,13 +1,11 @@
 # 👋🏻 Five.js 
 : 우아한테크코스 7기 프론트엔드 크루들이 모여, React와 Three.js를 활용해 3D 씬을 웹에서 인터랙티브하게 구현한 프로젝트입니다.
 
-<br />
 
 ## 🚀 Try it out
 
 [https://five-js.vercel.app](실제배포링크로변경예정)
 
-<br />
 
 
 ## 🎬 Scenes
@@ -22,7 +20,6 @@
 | **제나**<br>[@JeLee-river](https://github.com/JeLee-river) | <img src="./public/gifs/card-orbit.gif" width="300"/> <br> 🌌 **[씬 이름 미정]** | 설명: [추가 필요] |
 
 
-<br />
 
 ## 📁 폴더 구조
 ```bash
@@ -39,7 +36,6 @@ src/
 ├── util         # 유틸리티 함수 모음
 ```
 
-<br />
 
 ## ⚙️ 설치 및 실행
 
@@ -49,7 +45,6 @@ npm install
 npm run dev
 ```
 
-<br />
 
 ## 👥 Contributors
 | | | |
